@@ -25,6 +25,9 @@ export default class User {
   @Column({ type: "varchar", length: 127 })
   password: string;
 
+  @Column({ type: "varchar", length: 127, nullable: true })
+  profile_image: string;
+
   @Column({ type: "varchar", length: 30 })
   first_name: string;
 

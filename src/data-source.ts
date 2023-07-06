@@ -1,10 +1,14 @@
 import path from "path";
 import { DataSourceOptions, DataSource } from "typeorm";
 import "dotenv/config";
+import "reflect-metadata";
 
 const getDataSourceOptions = (): DataSourceOptions => {
-  const entitiesPath = path.join(__dirname, "./entities/**.{js,ts}");
-  const migrationsPath = path.join(__dirname, "./migrations/**.{js,ts}");
+  const entitiesPath: string = path.join(__dirname, "./entities/**.{js,ts}");
+  const migrationsPath: string = path.join(
+    __dirname,
+    "./migrations/**.{js,ts}"
+  );
 
   const dbUrl: string | undefined =
     process.env.DATABASE_URL || process.env.LOCAL_DATABASE_URL;
