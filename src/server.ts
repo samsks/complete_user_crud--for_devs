@@ -12,7 +12,7 @@ export const PathAPI = "https://localhost:" + PORT + API_DETAIL;
       console.log("Database connected");
 
       app.listen(PORT, () => {
-        console.log(`Server running on ${PathAPI}} 🚀`);
+        console.log(`Server running on ${PathAPI} 🚀`);
       });
     })
     .catch((error: any) => {
