@@ -17,9 +17,14 @@ const createUserService = async (newUserData: iUserReq): Promise<iUserRes> => {
 
   const userPersisted = await userRepository.save(user);
 
-  const newUser = userResSchema.parse(userPersisted);
+  const { id, ...newUser } = userResSchema.parse(userPersisted);
 
-  return newUser as iUserRes;
+  const dataRes = {
+    id: id,
+    ...newUser,
+  };
+
+  return dataRes as iUserRes;
 };
 
 export default createUserService;
