@@ -5,6 +5,7 @@ declare global {
     interface Request {
       user: {
         id: string;
+        is_superuser: boolean;
       };
       pagination: {
         limit: number;
