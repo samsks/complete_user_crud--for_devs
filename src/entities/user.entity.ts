@@ -12,27 +12,23 @@ export default class User {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ type: "varchar", length: 20 })
+  @Column({ type: "varchar", length: 20, unique: true })
   username: string;
 
-  @Column({
-    type: "varchar",
-    length: 50,
-    unique: true,
-  })
+  @Column({ type: "varchar", length: 50, unique: true })
   email: string;
 
   @Column({ type: "varchar", length: 127 })
   password: string;
 
   @Column({ type: "varchar", length: 127, nullable: true })
-  profile_image: string;
+  profile_image: string | null;
 
   @Column({ type: "varchar", length: 30 })
   first_name: string;
 
   @Column({ type: "varchar", length: 30, nullable: true })
-  middle_name: string;
+  middle_name: string | null;
 
   @Column({ type: "varchar", length: 20 })
   last_name: string;
@@ -42,6 +38,9 @@ export default class User {
 
   @Column({ type: "date" })
   birthday: string;
+
+  @Column({ type: "boolean", default: false })
+  is_superuser: boolean;
 
   @Column({ nullable: true })
   reset_token: string;
