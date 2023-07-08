@@ -5,7 +5,10 @@ import {
   ensureUsernameExistsMiddleware,
 } from "../middlewares";
 import { userReqSchema } from "../schemas/users.schema";
-import createUserController from "../controllers/users/createUser.controller";
+import {
+  createUserController,
+  retrieveUserByIdController,
+} from "../controllers/users.controller";
 
 const usersRoutes = Router();
 
@@ -16,5 +19,7 @@ usersRoutes.post(
   ensureUsernameExistsMiddleware,
   createUserController
 );
+
+usersRoutes.get("/:userId", retrieveUserByIdController);
 
 export default usersRoutes;
