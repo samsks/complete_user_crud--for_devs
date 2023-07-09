@@ -10,9 +10,9 @@ const userReqSchema = z.object({
   username: z.string().max(20),
   email: z.string().email().max(50),
   password: z.string().max(127),
-  profile_image: z.string().max(127).nullable(),
+  profile_image: z.string().max(127).nullish(),
   first_name: z.string().max(30),
-  middle_name: z.string().max(30).nullable(),
+  middle_name: z.string().max(30).nullish(),
   last_name: z.string().max(20),
   phone_number: z
     .string()
@@ -32,4 +32,32 @@ const userResSchema = userReqSchema
     password: true,
   });
 
-export { userReqSchema, userResSchema };
+const superuserResSchema = userReqSchema
+  .extend({
+    id: z.string().uuid(),
+    is_superuser: z.boolean(),
+    reset_token: z.string().nullable(),
+    created_at: z.date(),
+    updated_at: z.date(),
+    deleted_at: z.date().nullable(),
+  })
+  .omit({
+    password: true,
+  });
+
+const usersListResSchema = superuserResSchema.array();
+
+const userUpdateReqSchema = userReqSchema.partial();
+
+const userUpdateResSchema = userResSchema.extend({
+  updated_at: z.date(),
+});
+
+export {
+  userReqSchema,
+  userResSchema,
+  superuserResSchema,
+  usersListResSchema,
+  userUpdateReqSchema,
+  userUpdateResSchema,
+};

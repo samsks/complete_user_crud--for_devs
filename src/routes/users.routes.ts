@@ -4,10 +4,12 @@ import {
   ensureIsValidDataMiddleware,
   ensureUsernameExistsMiddleware,
 } from "../middlewares";
-import { userReqSchema } from "../schemas/users.schema";
+import { userReqSchema, userUpdateReqSchema } from "../schemas/users.schema";
 import {
   createUserController,
   retrieveUserByIdController,
+  retrieveUsersController,
+  updateUserController,
 } from "../controllers/users.controller";
 
 const usersRoutes = Router();
@@ -20,6 +22,14 @@ usersRoutes.post(
   createUserController
 );
 
+usersRoutes.get("", retrieveUsersController);
+
 usersRoutes.get("/:userId", retrieveUserByIdController);
+
+usersRoutes.patch(
+  "/:userId",
+  ensureIsValidDataMiddleware(userUpdateReqSchema),
+  updateUserController
+);
 
 export default usersRoutes;
