@@ -47,4 +47,17 @@ const superuserResSchema = userReqSchema
 
 const usersListResSchema = superuserResSchema.array();
 
-export { userReqSchema, userResSchema, superuserResSchema, usersListResSchema };
+const userUpdateReqSchema = userReqSchema.partial();
+
+const userUpdateResSchema = userResSchema.extend({
+  updated_at: z.date(),
+});
+
+export {
+  userReqSchema,
+  userResSchema,
+  superuserResSchema,
+  usersListResSchema,
+  userUpdateReqSchema,
+  userUpdateResSchema,
+};
