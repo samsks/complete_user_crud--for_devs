@@ -1,9 +1,18 @@
 import { Handler } from "express";
-import { createUserService, retrieveUserByIdService } from "../services/users";
+import {
+  createUserService,
+  retrieveUserByIdService,
+  retrieveUsersService,
+} from "../services/users";
 
 const createUserController: Handler = async (req, res) => {
   const newUser = await createUserService(req.body);
   return res.status(201).send(newUser);
+};
+
+const retrieveUsersController: Handler = async (req, res) => {
+  const usersData = await retrieveUsersService();
+  return res.status(200).send(usersData);
 };
 
 const retrieveUserByIdController: Handler = async (req, res) => {
@@ -11,4 +20,8 @@ const retrieveUserByIdController: Handler = async (req, res) => {
   return res.status(200).send(userData);
 };
 
-export { createUserController, retrieveUserByIdController };
+export {
+  createUserController,
+  retrieveUsersController,
+  retrieveUserByIdController,
+};

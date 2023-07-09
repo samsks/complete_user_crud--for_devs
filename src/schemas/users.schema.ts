@@ -32,4 +32,19 @@ const userResSchema = userReqSchema
     password: true,
   });
 
-export { userReqSchema, userResSchema };
+const superuserResSchema = userReqSchema
+  .extend({
+    id: z.string().uuid(),
+    is_superuser: z.boolean(),
+    reset_token: z.string().nullable(),
+    created_at: z.date(),
+    updated_at: z.date(),
+    deleted_at: z.date().nullable(),
+  })
+  .omit({
+    password: true,
+  });
+
+const usersListResSchema = superuserResSchema.array();
+
+export { userReqSchema, userResSchema, superuserResSchema, usersListResSchema };
