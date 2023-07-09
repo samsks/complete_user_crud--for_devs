@@ -10,9 +10,9 @@ const userReqSchema = z.object({
   username: z.string().max(20),
   email: z.string().email().max(50),
   password: z.string().max(127),
-  profile_image: z.string().max(127).nullable(),
+  profile_image: z.string().max(127).nullish(),
   first_name: z.string().max(30),
-  middle_name: z.string().max(30).nullable(),
+  middle_name: z.string().max(30).nullish(),
   last_name: z.string().max(20),
   phone_number: z
     .string()

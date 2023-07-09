@@ -22,13 +22,13 @@ export default class User {
   password: string;
 
   @Column({ type: "varchar", length: 127, nullable: true })
-  profile_image: string | null;
+  profile_image: string | null | undefined;
 
   @Column({ type: "varchar", length: 30 })
   first_name: string;
 
   @Column({ type: "varchar", length: 30, nullable: true })
-  middle_name: string | null;
+  middle_name: string | null | undefined;
 
   @Column({ type: "varchar", length: 20 })
   last_name: string;
