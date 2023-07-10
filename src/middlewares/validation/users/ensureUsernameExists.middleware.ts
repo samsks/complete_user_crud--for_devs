@@ -6,8 +6,9 @@ import AppError from "../../../errors/AppError";
 const ensureUsernameExistsMiddleware: Handler = async (req, res, next) => {
   const userRepository = AppDataSource.getRepository(User);
 
-  const findUser = await userRepository.findOneBy({
-    username: req.body.username,
+  const findUser = await userRepository.findOne({
+    where: { username: req.body.username },
+    withDeleted: true,
   });
 
   if (findUser) {

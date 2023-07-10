@@ -6,7 +6,7 @@ import { superuserResSchema } from "../../schemas/users.schema";
 const retrieveUsersService = async (): Promise<iSuperuserRes[]> => {
   const userRepository: iUserEntity = AppDataSource.getRepository(User);
 
-  const findUsers = await userRepository.find();
+  const findUsers = await userRepository.find({ withDeleted: true });
 
   const usersList = findUsers.map((user, i) => {
     const { id, ...userData } = superuserResSchema.parse(user);
