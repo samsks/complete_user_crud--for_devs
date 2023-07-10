@@ -7,6 +7,8 @@ import {
 import { userReqSchema, userUpdateReqSchema } from "../schemas/users.schema";
 import {
   createUserController,
+  deleteUserController,
+  disableUserController,
   retrieveUserByIdController,
   retrieveUsersController,
   updateUserController,
@@ -14,13 +16,9 @@ import {
 
 const usersRoutes = Router();
 
-usersRoutes.post(
-  "",
-  ensureIsValidDataMiddleware(userReqSchema),
-  ensureEmailExistsMiddleware,
-  ensureUsernameExistsMiddleware,
-  createUserController
-);
+usersRoutes.delete("/:userId", deleteUserController);
+
+usersRoutes.delete("/:userId/disable", disableUserController);
 
 usersRoutes.get("", retrieveUsersController);
 
@@ -30,6 +28,14 @@ usersRoutes.patch(
   "/:userId",
   ensureIsValidDataMiddleware(userUpdateReqSchema),
   updateUserController
+);
+
+usersRoutes.post(
+  "",
+  ensureIsValidDataMiddleware(userReqSchema),
+  ensureEmailExistsMiddleware,
+  ensureUsernameExistsMiddleware,
+  createUserController
 );
 
 export default usersRoutes;

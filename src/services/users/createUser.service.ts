@@ -1,12 +1,15 @@
-import { Repository } from "typeorm";
 import AppDataSource from "../../data-source";
 import User from "../../entities/user.entity";
-import { iUserReq, iUserRes } from "../../interfaces/users.interface";
+import {
+  iUserEntity,
+  iUserReq,
+  iUserRes,
+} from "../../interfaces/users.interface";
 import { hash } from "bcryptjs";
 import { userResSchema } from "../../schemas/users.schema";
 
 const createUserService = async (newUserData: iUserReq): Promise<iUserRes> => {
-  const userRepository: Repository<User> = AppDataSource.getRepository(User);
+  const userRepository: iUserEntity = AppDataSource.getRepository(User);
 
   const { password, ...userData } = newUserData;
 

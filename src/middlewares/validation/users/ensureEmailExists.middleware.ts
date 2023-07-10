@@ -6,8 +6,9 @@ import AppError from "../../../errors/AppError";
 const ensureEmailExistsMiddleware: Handler = async (req, res, next) => {
   const userRepository = AppDataSource.getRepository(User);
 
-  const findUser = await userRepository.findOneBy({
-    email: req.body.email,
+  const findUser = await userRepository.findOne({
+    where: { email: req.body.email },
+    withDeleted: true,
   });
 
   if (findUser) {
