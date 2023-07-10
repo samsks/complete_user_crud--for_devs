@@ -7,6 +7,7 @@ import {
 import { userReqSchema, userUpdateReqSchema } from "../schemas/users.schema";
 import {
   createUserController,
+  deleteUserController,
   retrieveUserByIdController,
   retrieveUsersController,
   updateUserController,
@@ -31,5 +32,7 @@ usersRoutes.patch(
   ensureIsValidDataMiddleware(userUpdateReqSchema),
   updateUserController
 );
+
+usersRoutes.delete("/:userId", deleteUserController);
 
 export default usersRoutes;

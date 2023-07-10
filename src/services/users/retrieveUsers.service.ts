@@ -1,11 +1,10 @@
-import { Repository } from "typeorm";
 import AppDataSource from "../../data-source";
 import User from "../../entities/user.entity";
-import { iSuperuserRes } from "../../interfaces/users.interface";
+import { iSuperuserRes, iUserEntity } from "../../interfaces/users.interface";
 import { superuserResSchema } from "../../schemas/users.schema";
 
 const retrieveUsersService = async (): Promise<iSuperuserRes[]> => {
-  const userRepository: Repository<User> = AppDataSource.getRepository(User);
+  const userRepository: iUserEntity = AppDataSource.getRepository(User);
 
   const findUsers = await userRepository.find();
 

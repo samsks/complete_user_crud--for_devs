@@ -1,7 +1,7 @@
-import { Repository } from "typeorm";
 import AppDataSource from "../../data-source";
 import User from "../../entities/user.entity";
 import {
+  iUserEntity,
   iUserUpdateReq,
   iUserUpdateRes,
 } from "../../interfaces/users.interface";
@@ -11,7 +11,7 @@ const updateUserService = async (
   userId: string,
   userDataUpdate: iUserUpdateReq
 ): Promise<iUserUpdateRes> => {
-  const userRepository: Repository<User> = AppDataSource.getRepository(User);
+  const userRepository: iUserEntity = AppDataSource.getRepository(User);
 
   const userUpdated = userRepository.create(userDataUpdate);
 
