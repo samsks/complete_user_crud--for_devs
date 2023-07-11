@@ -6,12 +6,14 @@ const authSessionReqSchema = userReqSchema.pick({
   password: true,
 });
 const authSessionResSchema = z.object({
-  token: z.string(),
-  refresh: z.string(),
+  access_token: z.string(),
+  refresh_token: z.string(),
 });
 
-const refreshTokenReqSchema = authSessionResSchema.pick({ refresh: true });
-const refreshTokenResSchema = authSessionResSchema.pick({ token: true });
+const refreshTokenReqSchema = authSessionResSchema.pick({
+  refresh_token: true,
+});
+const refreshTokenResSchema = authSessionResSchema;
 
 export {
   authSessionReqSchema,

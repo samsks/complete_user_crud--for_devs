@@ -47,7 +47,10 @@ const authSessionService = async ({ email, password }: iAuthSessionReq) => {
     }
   );
 
-  return { token: loginToken, refresh: refreshToken } as iAuthSessionRes;
+  return {
+    access_token: loginToken,
+    refresh_token: refreshToken,
+  } as iAuthSessionRes;
 };
 
 export default authSessionService;

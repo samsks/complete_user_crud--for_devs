@@ -12,7 +12,7 @@ app.use(cors());
 
 const API_DETAIL = process.env.API_DETAIL || "/api/v1";
 
-app.use(`${API_DETAIL}/login`, authRoutes);
+app.use(`${API_DETAIL}/auth`, authRoutes);
 app.use(`${API_DETAIL}/users`, usersRoutes);
 
 app.use(handleError);
