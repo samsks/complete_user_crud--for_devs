@@ -1,6 +1,9 @@
 import { Router } from "express";
 import { ensureIsValidDataMiddleware } from "../middlewares";
-import { authSessionController } from "../controllers/authSessions.controller";
+import {
+  authSessionController,
+  refreshTokenController,
+} from "../controllers/authSessions.controller";
 import {
   authSessionReqSchema,
   refreshTokenReqSchema,
@@ -13,6 +16,10 @@ authRoutes.post(
   ensureIsValidDataMiddleware(authSessionReqSchema),
   authSessionController
 );
-authRoutes.post("/refresh", ensureIsValidDataMiddleware(refreshTokenReqSchema));
+authRoutes.post(
+  "/refresh",
+  ensureIsValidDataMiddleware(refreshTokenReqSchema),
+  refreshTokenController
+);
 
 export default authRoutes;
