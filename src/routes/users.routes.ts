@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   ensureAuthMiddleware,
   ensureEmailExistsMiddleware,
+  ensureIsSuperuserMiddleware,
   ensureIsValidDataMiddleware,
   ensureUsernameExistsMiddleware,
 } from "../middlewares";
@@ -26,7 +27,12 @@ usersRoutes.delete(
   disableUserController
 );
 
-usersRoutes.get("", ensureAuthMiddleware, retrieveUsersController);
+usersRoutes.get(
+  "",
+  ensureAuthMiddleware,
+  ensureIsSuperuserMiddleware,
+  retrieveUsersController
+);
 
 usersRoutes.get("/:userId", ensureAuthMiddleware, retrieveUserByIdController);
 
