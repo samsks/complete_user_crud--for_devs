@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   ensureAuthMiddleware,
   ensureEmailExistsMiddleware,
+  ensureIsOwnerOrSuperuserMiddleware,
   ensureIsSuperuserMiddleware,
   ensureIsValidDataMiddleware,
   ensureUsernameExistsMiddleware,
@@ -24,6 +25,7 @@ usersRoutes.delete("/:userId", ensureAuthMiddleware, deleteUserController);
 usersRoutes.delete(
   "/:userId/deactivate",
   ensureAuthMiddleware,
+  ensureIsOwnerOrSuperuserMiddleware,
   disableUserController
 );
 
@@ -34,11 +36,17 @@ usersRoutes.get(
   retrieveUsersController
 );
 
-usersRoutes.get("/:userId", ensureAuthMiddleware, retrieveUserByIdController);
+usersRoutes.get(
+  "/:userId",
+  ensureAuthMiddleware,
+  ensureIsOwnerOrSuperuserMiddleware,
+  retrieveUserByIdController
+);
 
 usersRoutes.patch(
   "/:userId",
   ensureAuthMiddleware,
+  ensureIsOwnerOrSuperuserMiddleware,
   ensureIsValidDataMiddleware(userUpdateReqSchema),
   updateUserController
 );
@@ -54,6 +62,7 @@ usersRoutes.post(
 usersRoutes.put(
   "/:userId/activate",
   ensureAuthMiddleware,
+  ensureIsOwnerOrSuperuserMiddleware,
   enableUserController
 );
 
