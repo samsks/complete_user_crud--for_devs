@@ -9,6 +9,7 @@ import {
   createUserController,
   deleteUserController,
   disableUserController,
+  enableUserController,
   retrieveUserByIdController,
   retrieveUsersController,
   updateUserController,
@@ -18,7 +19,7 @@ const usersRoutes = Router();
 
 usersRoutes.delete("/:userId", deleteUserController);
 
-usersRoutes.delete("/:userId/disable", disableUserController);
+usersRoutes.delete("/:userId/deactivate", disableUserController);
 
 usersRoutes.get("", retrieveUsersController);
 
@@ -37,5 +38,7 @@ usersRoutes.post(
   ensureUsernameExistsMiddleware,
   createUserController
 );
+
+usersRoutes.put("/:userId/activate", enableUserController);
 
 export default usersRoutes;
