@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  ensureAuthMiddleware,
   ensureEmailExistsMiddleware,
   ensureIsValidDataMiddleware,
   ensureUsernameExistsMiddleware,
@@ -17,16 +18,21 @@ import {
 
 const usersRoutes = Router();
 
-usersRoutes.delete("/:userId", deleteUserController);
+usersRoutes.delete("/:userId", ensureAuthMiddleware, deleteUserController);
 
-usersRoutes.delete("/:userId/deactivate", disableUserController);
+usersRoutes.delete(
+  "/:userId/deactivate",
+  ensureAuthMiddleware,
+  disableUserController
+);
 
-usersRoutes.get("", retrieveUsersController);
+usersRoutes.get("", ensureAuthMiddleware, retrieveUsersController);
 
-usersRoutes.get("/:userId", retrieveUserByIdController);
+usersRoutes.get("/:userId", ensureAuthMiddleware, retrieveUserByIdController);
 
 usersRoutes.patch(
   "/:userId",
+  ensureAuthMiddleware,
   ensureIsValidDataMiddleware(userUpdateReqSchema),
   updateUserController
 );
@@ -39,6 +45,10 @@ usersRoutes.post(
   createUserController
 );
 
-usersRoutes.put("/:userId/activate", enableUserController);
+usersRoutes.put(
+  "/:userId/activate",
+  ensureAuthMiddleware,
+  enableUserController
+);
 
 export default usersRoutes;
