@@ -5,6 +5,7 @@ const ensureIsValidDataMiddleware =
   (schema: ZodTypeAny): Handler =>
   (req, res, next) => {
     const validateData = schema.parse(req.body);
+
     req.body = validateData;
 
     return next();

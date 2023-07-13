@@ -5,6 +5,7 @@ import {
   ensureIsOwnerOrSuperuserMiddleware,
   ensureIsSuperuserMiddleware,
   ensureIsValidDataMiddleware,
+  ensureUserIsActiveMiddleware,
   ensureUsernameExistsMiddleware,
 } from "../middlewares";
 import { userReqSchema, userUpdateReqSchema } from "../schemas/users.schema";
@@ -20,19 +21,26 @@ import {
 
 const usersRoutes = Router();
 
-usersRoutes.delete("/:userId", ensureAuthMiddleware, deleteUserController);
-
 usersRoutes.delete(
-  "/:userId/deactivate",
+  "/:userId",
   ensureAuthMiddleware,
   ensureIsOwnerOrSuperuserMiddleware,
+  ensureUserIsActiveMiddleware,
+  deleteUserController
+);
+
+usersRoutes.delete(
+  "/deactivate/:userId",
+  ensureAuthMiddleware,
+  ensureIsOwnerOrSuperuserMiddleware,
+  ensureUserIsActiveMiddleware,
   disableUserController
 );
 
 usersRoutes.get(
   "",
-  ensureAuthMiddleware,
-  ensureIsSuperuserMiddleware,
+  // ensureAuthMiddleware,
+  // ensureIsSuperuserMiddleware,
   retrieveUsersController
 );
 
@@ -40,6 +48,7 @@ usersRoutes.get(
   "/:userId",
   ensureAuthMiddleware,
   ensureIsOwnerOrSuperuserMiddleware,
+  ensureUserIsActiveMiddleware,
   retrieveUserByIdController
 );
 
@@ -47,6 +56,7 @@ usersRoutes.patch(
   "/:userId",
   ensureAuthMiddleware,
   ensureIsOwnerOrSuperuserMiddleware,
+  ensureUserIsActiveMiddleware,
   ensureIsValidDataMiddleware(userUpdateReqSchema),
   updateUserController
 );
@@ -59,11 +69,6 @@ usersRoutes.post(
   createUserController
 );
 
-usersRoutes.put(
-  "/:userId/activate",
-  ensureAuthMiddleware,
-  ensureIsOwnerOrSuperuserMiddleware,
-  enableUserController
-);
+usersRoutes.put("/activate/:userId", enableUserController);
 
 export default usersRoutes;

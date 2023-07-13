@@ -4,6 +4,7 @@ import ensureUsernameExistsMiddleware from "./validation/users/ensureUsernameExi
 import ensureIsSuperuserMiddleware from "./authorization/ensureIsSuperuser.middleware";
 import ensureAuthMiddleware from "./authentication/ensureAuth.middleware";
 import ensureIsOwnerOrSuperuserMiddleware from "./authorization/ensureIsOwnerOrSuperuser.middleware";
+import ensureUserIsActiveMiddleware from "./validation/users/ensureUserIsActive.middleware";
 
 // AUTHENTICATION
 export { ensureAuthMiddleware };
@@ -15,4 +16,8 @@ export { ensureIsSuperuserMiddleware, ensureIsOwnerOrSuperuserMiddleware };
 export { ensureIsValidDataMiddleware };
 
 // VALIDATION USER
-export { ensureEmailExistsMiddleware, ensureUsernameExistsMiddleware };
+export {
+  ensureEmailExistsMiddleware,
+  ensureUsernameExistsMiddleware,
+  ensureUserIsActiveMiddleware,
+};
