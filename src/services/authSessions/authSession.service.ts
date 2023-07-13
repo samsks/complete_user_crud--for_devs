@@ -13,7 +13,11 @@ import {
 const authSessionService = async ({ email, password }: iAuthSessionReq) => {
   const userRepository: iUserEntity = AppDataSource.getRepository(User);
 
-  const user = await userRepository.findOneBy({ email });
+  const user = await userRepository
+    .createQueryBuilder("users")
+    .where("users.email = :email", { email })
+    .withDeleted()
+    .getOne();
 
   if (!user) {
     throw new AppError("Client or Password invalid", 403);
@@ -23,6 +27,10 @@ const authSessionService = async ({ email, password }: iAuthSessionReq) => {
 
   if (!passwordMatch) {
     throw new AppError("Client or Password invalid", 403);
+  }
+
+  if (user.deleted_at) {
+    throw new AppError("The user is deactivated", 403);
   }
 
   const loginToken = jwt.sign(
