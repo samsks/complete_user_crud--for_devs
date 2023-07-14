@@ -3,6 +3,7 @@ import {
   createUserService,
   deleteUserService,
   disableUserService,
+  enableUserService,
   retrieveUserByIdService,
   retrieveUsersService,
   updateUserService,
@@ -11,6 +12,11 @@ import {
 const createUserController: Handler = async (req, res) => {
   const newUser = await createUserService(req.body);
   return res.status(201).send(newUser);
+};
+
+const enableUserController: Handler = async (req, res) => {
+  const user = await enableUserService(req.params.userId);
+  return res.status(200).send(user);
 };
 
 const deleteUserController: Handler = async (req, res) => {
@@ -40,6 +46,7 @@ const updateUserController: Handler = async (req, res) => {
 
 export {
   createUserController,
+  enableUserController,
   deleteUserController,
   disableUserController,
   retrieveUsersController,

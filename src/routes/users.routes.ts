@@ -1,6 +1,9 @@
 import { Router } from "express";
 import {
+  ensureAuthMiddleware,
   ensureEmailExistsMiddleware,
+  ensureIsOwnerOrSuperuserMiddleware,
+  ensureIsSuperuserMiddleware,
   ensureIsValidDataMiddleware,
   ensureUsernameExistsMiddleware,
 } from "../middlewares";
@@ -9,6 +12,7 @@ import {
   createUserController,
   deleteUserController,
   disableUserController,
+  enableUserController,
   retrieveUserByIdController,
   retrieveUsersController,
   updateUserController,
@@ -16,16 +20,38 @@ import {
 
 const usersRoutes = Router();
 
-usersRoutes.delete("/:userId", deleteUserController);
+usersRoutes.delete(
+  "/:userId",
+  ensureAuthMiddleware,
+  ensureIsOwnerOrSuperuserMiddleware,
+  deleteUserController
+);
 
-usersRoutes.delete("/:userId/disable", disableUserController);
+usersRoutes.delete(
+  "/deactivate/:userId",
+  ensureAuthMiddleware,
+  ensureIsOwnerOrSuperuserMiddleware,
+  disableUserController
+);
 
-usersRoutes.get("", retrieveUsersController);
+usersRoutes.get(
+  "",
+  ensureAuthMiddleware,
+  ensureIsSuperuserMiddleware,
+  retrieveUsersController
+);
 
-usersRoutes.get("/:userId", retrieveUserByIdController);
+usersRoutes.get(
+  "/:userId",
+  ensureAuthMiddleware,
+  ensureIsOwnerOrSuperuserMiddleware,
+  retrieveUserByIdController
+);
 
 usersRoutes.patch(
   "/:userId",
+  ensureAuthMiddleware,
+  ensureIsOwnerOrSuperuserMiddleware,
   ensureIsValidDataMiddleware(userUpdateReqSchema),
   updateUserController
 );
@@ -37,5 +63,7 @@ usersRoutes.post(
   ensureUsernameExistsMiddleware,
   createUserController
 );
+
+usersRoutes.put("/activate/:userId", enableUserController);
 
 export default usersRoutes;
