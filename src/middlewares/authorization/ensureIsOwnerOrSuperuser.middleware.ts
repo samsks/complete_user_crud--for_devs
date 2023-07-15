@@ -7,18 +7,21 @@ const ensureIsOwnerOrSuperuserMiddleware: Handler = async (req, res, next) => {
   const userId = req.params.userId !== undefined ? req.params.userId : null;
 
   if (userId) {
-    if (
-      !req.user.is_superuser &&
-      req.user.id != (req.params.userId && req.params.userId != undefined)
-    ) {
+    if (!req.user.is_superuser && req.user.id != userId) {
       throw new AppError("Missing permissions", 401);
     }
     const userRepository = AppDataSource.getRepository(User);
     const findUser = await userRepository.findOneBy({ id: userId });
+    console.log(findUser);
+    console.log(userRepository);
 
     if (!findUser) {
       throw new AppError("UserID not exists", 404);
     }
+
+    req.locals = req.locals
+      ? { ...req.locals, userRepository: userRepository }
+      : { userRepository: userRepository };
 
     req.locals = req.locals
       ? { ...req.locals, user: findUser }

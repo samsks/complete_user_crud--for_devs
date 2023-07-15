@@ -20,6 +20,7 @@ const enableUserController: Handler = async (req, res) => {
 };
 
 const deleteUserController: Handler = async (req, res) => {
+  // await deleteUserService(req.locals!.userRepository!, req.locals!.user!);
   await deleteUserService(req.params.userId);
   return res.status(204).send();
 };

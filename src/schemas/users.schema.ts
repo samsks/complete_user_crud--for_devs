@@ -53,6 +53,10 @@ const userUpdateResSchema = userResSchema.extend({
   updated_at: z.date(),
 });
 
+const userReqLocalsSchema = superuserResSchema.extend({
+  password: z.string(),
+});
+
 export {
   userReqSchema,
   userResSchema,
@@ -60,4 +64,5 @@ export {
   usersListResSchema,
   userUpdateReqSchema,
   userUpdateResSchema,
+  userReqLocalsSchema,
 };
