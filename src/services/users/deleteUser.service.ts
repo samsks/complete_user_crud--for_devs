@@ -1,6 +1,6 @@
 import AppDataSource from "../../data-source";
 import User from "../../entities/user.entity";
-import { iSuperuserRes, iUserEntity } from "../../interfaces/users.interface";
+import { iUserEntity } from "../../interfaces/users.interface";
 
 const deleteUserService = async (
   // userRepository: iUserEntity,
