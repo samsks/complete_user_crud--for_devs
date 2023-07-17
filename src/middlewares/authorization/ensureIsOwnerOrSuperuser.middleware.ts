@@ -12,8 +12,6 @@ const ensureIsOwnerOrSuperuserMiddleware: Handler = async (req, res, next) => {
     }
     const userRepository = AppDataSource.getRepository(User);
     const findUser = await userRepository.findOneBy({ id: userId });
-    console.log(findUser);
-    console.log(userRepository);
 
     if (!findUser) {
       throw new AppError("UserID not exists", 404);
