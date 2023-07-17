@@ -20,12 +20,12 @@ const enableUserController: Handler = async (req, res) => {
 };
 
 const deleteUserController: Handler = async (req, res) => {
-  await deleteUserService(req.params.userId);
+  await deleteUserService(req.locals!.userRepository!, req.locals!.user!);
   return res.status(204).send();
 };
 
 const disableUserController: Handler = async (req, res) => {
-  await disableUserService(req.params.userId);
+  await disableUserService(req.locals!.userRepository!, req.locals!.user!.id);
   return res.status(204).send();
 };
 

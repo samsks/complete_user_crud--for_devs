@@ -1,10 +1,9 @@
-import AppDataSource from "../../data-source";
-import User from "../../entities/user.entity";
 import { iUserEntity } from "../../interfaces/users.interface";
 
-const disableUserService = async (userId: string): Promise<void> => {
-  const userRepository: iUserEntity = AppDataSource.getRepository(User);
-
+const disableUserService = async (
+  userRepository: iUserEntity,
+  userId: string
+): Promise<void> => {
   await userRepository.softDelete(userId);
 
   return;

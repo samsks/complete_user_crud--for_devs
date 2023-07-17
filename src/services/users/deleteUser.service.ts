@@ -1,13 +1,10 @@
-import AppDataSource from "../../data-source";
-import User from "../../entities/user.entity";
-import { iUserEntity } from "../../interfaces/users.interface";
+import { iUser, iUserEntity } from "../../interfaces/users.interface";
 
-const deleteUserService = async (userId: string): Promise<void> => {
-  const userRepository: iUserEntity = AppDataSource.getRepository(User);
-
-  const findUser = await userRepository.findOneBy({ id: userId });
-
-  await userRepository.remove(findUser!);
+const deleteUserService = async (
+  userRepository: iUserEntity,
+  user: iUser
+): Promise<void> => {
+  await userRepository.remove(user);
 
   return;
 };
