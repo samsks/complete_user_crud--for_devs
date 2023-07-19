@@ -36,8 +36,8 @@ usersRoutes.delete(
 
 usersRoutes.get(
   "",
-  ensureAuthMiddleware,
-  ensureIsSuperuserMiddleware,
+  // ensureAuthMiddleware,
+  // ensureIsSuperuserMiddleware,
   retrieveUsersController
 );
 
