@@ -40,7 +40,11 @@ const retrieveUsersController: Handler = async (req, res) => {
 };
 
 const updateUserController: Handler = async (req, res) => {
-  const userData = await updateUserService(req.params.userId, req.body);
+  const userData = await updateUserService(
+    req.locals!.userRepository!,
+    req.locals!.user!,
+    req.body
+  );
   return res.status(200).send(userData);
 };
 
