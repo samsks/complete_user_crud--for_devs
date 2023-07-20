@@ -1,6 +1,5 @@
-import AppDataSource from "../../data-source";
-import User from "../../entities/user.entity";
 import {
+  iUser,
   iUserEntity,
   iUserUpdateReq,
   iUserUpdateRes,
@@ -8,22 +7,19 @@ import {
 import { userUpdateResSchema } from "../../schemas/users.schema";
 
 const updateUserService = async (
-  userId: string,
-  userDataUpdate: iUserUpdateReq
+  userRepository: iUserEntity,
+  user: iUser,
+  bodyData: iUserUpdateReq
 ): Promise<iUserUpdateRes> => {
-  const userRepository: iUserEntity = AppDataSource.getRepository(User);
+  const userUpdated = userRepository.create(bodyData);
 
-  const userUpdated = userRepository.create(userDataUpdate);
+  await userRepository.update(user.id, userUpdated);
 
-  await userRepository.update(userId, userUpdated);
-
-  const findUser = await userRepository.findOneBy({ id: userId });
-
-  const { id, ...user } = userUpdateResSchema.parse(findUser);
+  const { id, ...userData } = userUpdateResSchema.parse(user);
 
   const dataUser = {
     id: id,
-    ...user,
+    ...userData,
   };
 
   return dataUser as iUserUpdateRes;
