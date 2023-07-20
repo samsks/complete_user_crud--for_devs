@@ -30,7 +30,7 @@ const disableUserController: Handler = async (req, res) => {
 };
 
 const retrieveUserByIdController: Handler = async (req, res) => {
-  const userData = await retrieveUserByIdService(req.params.userId);
+  const userData = await retrieveUserByIdService(req.locals!.user!);
   return res.status(200).send(userData);
 };
 
