@@ -4,7 +4,10 @@ import User from "../../../entities/user.entity";
 import AppError from "../../../errors/AppError";
 
 const ensureUsernameExistsMiddleware: Handler = async (req, res, next) => {
-  const userRepository = AppDataSource.getRepository(User);
+  const userRepository =
+    req.method === "POST"
+      ? AppDataSource.getRepository(User)
+      : req.locals?.userRepository!;
 
   const findUser = await userRepository.findOne({
     where: { username: req.body.username },
