@@ -22,13 +22,13 @@ export default class User {
   password: string;
 
   @Column({ type: "varchar", length: 127, nullable: true })
-  profile_image: string | null | undefined;
+  profile_image?: string | null | undefined;
 
   @Column({ type: "varchar", length: 30 })
   first_name: string;
 
   @Column({ type: "varchar", length: 30, nullable: true })
-  middle_name: string | null | undefined;
+  middle_name?: string | null | undefined;
 
   @Column({ type: "varchar", length: 20 })
   last_name: string;
@@ -42,8 +42,8 @@ export default class User {
   @Column({ type: "boolean", default: false })
   is_superuser: boolean;
 
-  @Column({ nullable: true })
-  reset_token: string;
+  @Column({ type: "varchar", nullable: true })
+  reset_token?: string | null | undefined;
 
   @CreateDateColumn()
   created_at: Date;

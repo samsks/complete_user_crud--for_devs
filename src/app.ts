@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Application, application } from "express";
 import "express-async-errors";
 import handleError from "./errors/handlerError";
 import "dotenv/config";
@@ -6,7 +6,7 @@ import cors from "cors";
 import usersRoutes from "./routes/users.routes";
 import authRoutes from "./routes/authSessions.routes";
 
-const app = express();
+const app: Application = express();
 app.use(express.json());
 app.use(cors());
 

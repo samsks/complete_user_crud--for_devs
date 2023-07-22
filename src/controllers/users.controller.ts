@@ -1,4 +1,4 @@
-import { Handler } from "express";
+import { Handler, Response } from "express";
 import {
   createUserService,
   deleteUserService,
@@ -9,43 +9,49 @@ import {
   updateUserService,
 } from "../services/users";
 
-const createUserController: Handler = async (req, res) => {
+const createUserController: Handler = async (req, res): Promise<Response> => {
   const newUser = await createUserService(req.body);
-  return res.status(201).send(newUser);
+  return res.status(201).json(newUser);
 };
 
-const enableUserController: Handler = async (req, res) => {
+const enableUserController: Handler = async (req, res): Promise<Response> => {
   const user = await enableUserService(req.params.userId);
-  return res.status(200).send(user);
+  return res.status(200).json(user);
 };
 
-const deleteUserController: Handler = async (req, res) => {
+const deleteUserController: Handler = async (req, res): Promise<Response> => {
   await deleteUserService(req.locals!.userRepository!, req.locals!.user!);
-  return res.status(204).send();
+  return res.status(204).json();
 };
 
-const disableUserController: Handler = async (req, res) => {
+const disableUserController: Handler = async (req, res): Promise<Response> => {
   await disableUserService(req.locals!.userRepository!, req.locals!.user!.id);
-  return res.status(204).send();
+  return res.status(204).json();
 };
 
-const retrieveUserByIdController: Handler = async (req, res) => {
+const retrieveUserByIdController: Handler = async (
+  req,
+  res
+): Promise<Response> => {
   const userData = await retrieveUserByIdService(req.locals!.user!);
-  return res.status(200).send(userData);
+  return res.status(200).json(userData);
 };
 
-const retrieveUsersController: Handler = async (req, res) => {
+const retrieveUsersController: Handler = async (
+  req,
+  res
+): Promise<Response> => {
   const usersData = await retrieveUsersService();
-  return res.status(200).send(usersData);
+  return res.status(200).json(usersData);
 };
 
-const updateUserController: Handler = async (req, res) => {
+const updateUserController: Handler = async (req, res): Promise<Response> => {
   const userData = await updateUserService(
     req.locals!.userRepository!,
     req.locals!.user!,
     req.body
   );
-  return res.status(200).send(userData);
+  return res.status(200).json(userData);
 };
 
 export {
