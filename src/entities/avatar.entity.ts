@@ -18,7 +18,7 @@ export default class Avatar {
   @Column({ type: "text" })
   path: string;
 
-  @OneToOne(() => User, (user) => user.avatar)
+  @OneToOne(() => User, (user) => user.avatar, { cascade: true })
   @JoinColumn()
   user: User;
 }
