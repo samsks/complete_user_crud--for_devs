@@ -1,16 +1,20 @@
 import { z } from "zod";
-import { isValid, parseISO } from "date-fns";
-
-const isValidDate = (value: string) => {
-  const date = parseISO(value);
-  return isValid(date) && value.match(/^\d{4}-\d{2}-\d{2}$/) !== null;
-};
+import { isValidDate } from "../utils/schemaValidations/user.scripts";
+import { isValidFileExtension } from "../utils/schemaValidations/avatar.scripts";
 
 const userReqSchema = z.object({
   username: z.string().max(20),
   email: z.string().email().max(50),
   password: z.string().max(127),
-  profile_image: z.string().max(127).nullish(),
+  avatar: z
+    .any()
+    .refine((value) => {
+      if (!value || typeof value !== "object" || !("fieldname" in value)) {
+        return true;
+      }
+      return isValidFileExtension(value.originalname);
+    })
+    .optional(),
   first_name: z.string().max(30),
   middle_name: z.string().max(30).nullish(),
   last_name: z.string().max(20),
@@ -43,11 +47,16 @@ const superuserResSchema = userReqSchema
   })
   .omit({
     password: true,
+    avatar: true,
   });
 
 const usersListResSchema = superuserResSchema.array();
 
-const userUpdateReqSchema = userReqSchema.partial();
+const userUpdateReqSchema = userReqSchema
+  .omit({
+    avatar: true,
+  })
+  .partial();
 
 const userUpdateResSchema = userResSchema.extend({
   updated_at: z.date(),

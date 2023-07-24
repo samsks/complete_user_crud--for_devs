@@ -7,8 +7,8 @@ import {
 } from "typeorm";
 import User from "./user.entity";
 
-@Entity("users-profile_img")
-export default class userProfileImg {
+@Entity("avatars")
+export default class Avatar {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -18,7 +18,7 @@ export default class userProfileImg {
   @Column({ type: "text" })
   path: string;
 
-  @OneToOne(() => User)
+  @OneToOne(() => User, (user) => user.avatar)
   @JoinColumn()
   user: User;
 }

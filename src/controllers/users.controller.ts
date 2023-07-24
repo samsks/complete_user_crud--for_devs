@@ -10,8 +10,8 @@ import {
 } from "../services/users";
 
 const createUserController: Handler = async (req, res): Promise<Response> => {
-  const newUser = await createUserService(req.body);
-  return res.status(201).json(newUser);
+  const newUser = await createUserService(req.body, req.file);
+  return res.status(201).send(newUser);
 };
 
 const enableUserController: Handler = async (req, res): Promise<Response> => {
