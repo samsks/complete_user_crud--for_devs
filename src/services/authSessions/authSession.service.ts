@@ -19,19 +19,13 @@ const authSessionService = async ({ email, password }: iAuthSessionReq) => {
     .withDeleted()
     .getOne();
 
-  if (!user) {
-    throw new AppError("Client or Password invalid", 403);
-  }
+  if (!user) throw new AppError("Client or Password invalid", 403);
 
   const passwordMatch = await compare(password, user.password);
 
-  if (!passwordMatch) {
-    throw new AppError("Client or Password invalid", 403);
-  }
+  if (!passwordMatch) throw new AppError("Client or Password invalid", 403);
 
-  if (user.deleted_at) {
-    throw new AppError("The user is deactivated", 403);
-  }
+  if (user.deleted_at) throw new AppError("The user is deactivated", 403);
 
   const loginToken = jwt.sign(
     {

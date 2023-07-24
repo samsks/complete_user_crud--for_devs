@@ -53,6 +53,8 @@ usersRoutes.patch(
   ensureAuthMiddleware,
   ensureIsOwnerOrSuperuserMiddleware,
   ensureIsValidDataMiddleware(userUpdateReqSchema),
+  ensureEmailExistsMiddleware,
+  ensureUsernameExistsMiddleware,
   updateUserController
 );
 

@@ -22,9 +22,7 @@ const refreshTokenService = async ({
     id: decodedToken.sub,
   });
 
-  if (!user) {
-    throw new AppError("Invalid refresh token", 403);
-  }
+  if (!user) throw new AppError("Invalid refresh token", 403);
 
   try {
     jwt.verify(refresh_token, process.env.REFRESH_SECRET_KEY as string, {

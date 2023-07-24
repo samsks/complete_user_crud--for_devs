@@ -8,20 +8,19 @@ const handleError = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
-  if (err instanceof AppError) {
-    return res.status(err.statusCode).send({
+): Promise<void> => {
+  if (err instanceof AppError)
+    res.status(err.statusCode).json({
       message: err.message,
     });
-  } else if (err instanceof ZodError) {
-    return res.status(400).send({
+  else if (err instanceof ZodError)
+    res.status(400).json({
       message: err.flatten().fieldErrors,
     });
-  }
 
   console.error(err);
 
-  return res.status(500).send({
+  res.status(500).json({
     message: `Internal server error: ${err.message}`,
   });
 };
