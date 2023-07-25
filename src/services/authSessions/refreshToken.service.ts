@@ -5,7 +5,7 @@ import {
   iRefreshTokenReq,
   iRefreshTokenRes,
 } from "../../interfaces/authSession.interface";
-import { iUserEntity } from "../../interfaces/users.interface";
+import { iUser, iUserEntity } from "../../interfaces/users.interface";
 import AppError from "../../errors/AppError";
 
 const refreshTokenService = async ({
@@ -18,7 +18,7 @@ const refreshTokenService = async ({
     process.env.REFRESH_SECRET_KEY as string
   ) as { sub: string };
 
-  const user = await userRepository.findOneBy({
+  const user: iUser | null = await userRepository.findOneBy({
     id: decodedToken.sub,
   });
 
@@ -32,7 +32,7 @@ const refreshTokenService = async ({
     throw new AppError("Invalid refresh token", 403);
   }
 
-  const newToken = jwt.sign(
+  const newToken: string = jwt.sign(
     {
       is_superuser: user.is_superuser,
     },
@@ -43,7 +43,7 @@ const refreshTokenService = async ({
     }
   );
 
-  const newRefreshToken = jwt.sign(
+  const newRefreshToken: string = jwt.sign(
     {
       is_superuser: user.is_superuser,
     },

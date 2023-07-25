@@ -4,7 +4,7 @@ import "dotenv/config";
 import AppError from "../../errors/AppError";
 
 const ensureAuthMiddleware: Handler = async (req, res, next): Promise<void> => {
-  let token = req.headers.authorization;
+  let token: string | undefined = req.headers.authorization;
 
   if (!token) throw new AppError("Invalid token", 401);
 
@@ -15,7 +15,7 @@ const ensureAuthMiddleware: Handler = async (req, res, next): Promise<void> => {
     process.env.TOKEN_SECRET_KEY as string,
     (error, decoded: any) => {
       if (error) {
-        let message = error.message;
+        let message: string = error.message;
 
         if (message.includes("jwt")) message = message.replace("jwt", "token");
 

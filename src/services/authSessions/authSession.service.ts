@@ -3,17 +3,20 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 import User from "../../entities/user.entity";
 import { compare } from "bcryptjs";
-import { iUserEntity } from "../../interfaces/users.interface";
+import { iUser, iUserEntity } from "../../interfaces/users.interface";
 import AppError from "../../errors/AppError";
 import {
   iAuthSessionReq,
   iAuthSessionRes,
 } from "../../interfaces/authSession.interface";
 
-const authSessionService = async ({ email, password }: iAuthSessionReq) => {
+const authSessionService = async ({
+  email,
+  password,
+}: iAuthSessionReq): Promise<iAuthSessionRes> => {
   const userRepository: iUserEntity = AppDataSource.getRepository(User);
 
-  const user = await userRepository
+  const user: iUser | null = await userRepository
     .createQueryBuilder("users")
     .where("users.email = :email", { email })
     .withDeleted()
@@ -21,13 +24,13 @@ const authSessionService = async ({ email, password }: iAuthSessionReq) => {
 
   if (!user) throw new AppError("Client or Password invalid", 403);
 
-  const passwordMatch = await compare(password, user.password);
+  const passwordMatch: boolean = await compare(password, user.password);
 
   if (!passwordMatch) throw new AppError("Client or Password invalid", 403);
 
   if (user.deleted_at) throw new AppError("The user is deactivated", 403);
 
-  const loginToken = jwt.sign(
+  const loginToken: string = jwt.sign(
     {
       is_superuser: user.is_superuser,
     },
@@ -38,7 +41,7 @@ const authSessionService = async ({ email, password }: iAuthSessionReq) => {
     }
   );
 
-  const refreshToken = jwt.sign(
+  const refreshToken: string = jwt.sign(
     {
       is_superuser: user.is_superuser,
     },

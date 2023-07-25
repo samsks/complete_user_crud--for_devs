@@ -8,14 +8,15 @@ import {
   retrieveUsersService,
   updateUserService,
 } from "../services/users";
+import { iUserRes, iUserUpdateRes } from "../interfaces/users.interface";
 
 const createUserController: Handler = async (req, res): Promise<Response> => {
-  const newUser = await createUserService(req.body, req.file);
+  const newUser: iUserRes = await createUserService(req.body, req.file);
   return res.status(201).send(newUser);
 };
 
 const enableUserController: Handler = async (req, res): Promise<Response> => {
-  const user = await enableUserService(req.params.userId);
+  const user: iUserRes = await enableUserService(req.params.userId);
   return res.status(200).json(user);
 };
 
@@ -33,7 +34,7 @@ const retrieveUserByIdController: Handler = async (
   req,
   res
 ): Promise<Response> => {
-  const userData = await retrieveUserByIdService(req.locals!.user!);
+  const userData: iUserRes = await retrieveUserByIdService(req.locals!.user!);
   return res.status(200).json(userData);
 };
 
@@ -41,12 +42,12 @@ const retrieveUsersController: Handler = async (
   req,
   res
 ): Promise<Response> => {
-  const usersData = await retrieveUsersService();
+  const usersData: iUserRes[] = await retrieveUsersService();
   return res.status(200).json(usersData);
 };
 
 const updateUserController: Handler = async (req, res): Promise<Response> => {
-  const userData = await updateUserService(
+  const userData: iUserUpdateRes = await updateUserService(
     req.locals!.userRepository!,
     req.locals!.user!,
     req.body

@@ -19,7 +19,7 @@ import {
 } from "../controllers/users.controller";
 import multerPhotosPathConfig from "../configs/multerPhotosPath.config";
 
-const usersRoutes = Router();
+const usersRoutes: Router = Router();
 
 usersRoutes.delete(
   "/:userId",

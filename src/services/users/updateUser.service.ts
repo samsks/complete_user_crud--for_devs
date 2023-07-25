@@ -2,6 +2,7 @@ import { hash } from "bcryptjs";
 import {
   iUser,
   iUserEntity,
+  iUserRes,
   iUserUpdateReq,
   iUserUpdateRes,
 } from "../../interfaces/users.interface";
@@ -12,16 +13,17 @@ const updateUserService = async (
   user: iUser,
   bodyData: iUserUpdateReq
 ): Promise<iUserUpdateRes> => {
-  const userUpdated = userRepository.create(bodyData);
+  const userUpdated: iUser = userRepository.create(bodyData);
 
   if (userUpdated.password)
     userUpdated.password = await hash(userUpdated.password, 10);
 
   await userRepository.update(user.id, userUpdated);
 
-  const { id, avatar, ...userData } = userUpdateResSchema.parse(user);
+  const { id, avatar, ...userData }: iUserUpdateRes =
+    userUpdateResSchema.parse(user);
 
-  const dataUser = {
+  const dataUser: iUserRes = {
     id: id,
     ...userData,
   };
