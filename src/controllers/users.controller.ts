@@ -25,7 +25,7 @@ const deleteUserController: Handler = async (req, res): Promise<Response> => {
 };
 
 const disableUserController: Handler = async (req, res): Promise<Response> => {
-  await disableUserService(req.locals!.userRepository!, req.locals!.user!.id);
+  await disableUserService(req.locals!.userRepository!, req.locals!.user!);
   return res.status(204).json();
 };
 

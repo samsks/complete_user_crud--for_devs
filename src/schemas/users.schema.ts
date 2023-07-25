@@ -1,20 +1,12 @@
 import { z } from "zod";
 import { isValidDate } from "../utils/schemaValidations/user.scripts";
-import { isValidFileExtension } from "../utils/schemaValidations/avatar.scripts";
+import { avatarReqSchema } from "./photos.schemas";
 
 const userReqSchema = z.object({
   username: z.string().max(20),
   email: z.string().email().max(50),
   password: z.string().max(127),
-  avatar: z
-    .any()
-    .refine((value) => {
-      if (!value || typeof value !== "object" || !("fieldname" in value)) {
-        return true;
-      }
-      return isValidFileExtension(value.originalname);
-    })
-    .optional(),
+  avatar: avatarReqSchema.shape.avatar.optional(),
   first_name: z.string().max(30),
   middle_name: z.string().max(30).nullish(),
   last_name: z.string().max(20),

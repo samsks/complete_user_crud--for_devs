@@ -50,7 +50,7 @@ export default class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @DeleteDateColumn()
+  @DeleteDateColumn({ nullable: true })
   deleted_at: Date;
 
   @OneToOne(() => Avatar, (avatar) => avatar.user)
