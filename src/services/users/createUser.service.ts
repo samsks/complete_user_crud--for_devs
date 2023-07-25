@@ -15,7 +15,6 @@ const createUserService = async (
   avatarFile?: Express.Multer.File
 ): Promise<iUserRes> => {
   const userRepository: iUserEntity = AppDataSource.getRepository(User);
-  const avatarRepository = AppDataSource.getRepository(Avatar);
 
   const { password, ...userData } = newUserData;
 
@@ -29,6 +28,8 @@ const createUserService = async (
   let userAvatar: Avatar | null = null;
 
   if (avatarFile) {
+    const avatarRepository = AppDataSource.getRepository(Avatar);
+
     const userAvatarEntity = avatarRepository.create({
       name: avatarFile.originalname,
       path: "../../../upload/avatars/" + avatarFile.filename,
