@@ -1,6 +1,7 @@
 import AppDataSource from "../../data-source";
 import User from "../../entities/user.entity";
 import {
+  iUser,
   iUserEntity,
   iUserReq,
   iUserRes,
@@ -9,6 +10,7 @@ import { hash } from "bcryptjs";
 import { userResSchema } from "../../schemas/users.schema";
 import Avatar from "../../entities/avatar.entity";
 import path from "path";
+import { iAvatar, iAvatarEntity } from "../../interfaces/photos.interface";
 
 const createUserService = async (
   newUserData: iUserReq,
@@ -16,21 +18,21 @@ const createUserService = async (
 ): Promise<iUserRes> => {
   const userRepository: iUserEntity = AppDataSource.getRepository(User);
 
-  const { password, ...userData } = newUserData;
+  const { password, ...userData }: iUserReq = newUserData;
 
-  const user = userRepository.create({
+  const user: iUser = userRepository.create({
     ...userData,
     password: await hash(password, 10),
   });
 
-  const userPersisted = await userRepository.save(user);
+  const userPersisted: iUser = await userRepository.save(user);
 
-  let userAvatar: Avatar | null = null;
+  let userAvatar: iAvatar | null = null;
 
   if (avatarFile) {
-    const avatarRepository = AppDataSource.getRepository(Avatar);
+    const avatarRepository: iAvatarEntity = AppDataSource.getRepository(Avatar);
 
-    const userAvatarEntity = avatarRepository.create({
+    const userAvatarEntity: iAvatar = avatarRepository.create({
       name: avatarFile.originalname,
       path: "../../../upload/avatars/" + avatarFile.filename,
       user: userPersisted,
@@ -39,9 +41,9 @@ const createUserService = async (
     userAvatar = userAvatarEntity;
   }
 
-  const { id, ...newUser } = userResSchema.parse(userPersisted);
+  const { id, ...newUser }: iUserRes = userResSchema.parse(userPersisted);
 
-  const dataRes = {
+  const dataRes: iUserRes = {
     id: id,
     ...newUser,
     avatar: avatarFile ? path.join(__dirname, userAvatar?.path!) : null,

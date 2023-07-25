@@ -46,6 +46,6 @@ const getDataSourceOptions = (): DataSourceOptions => {
   };
 };
 
-const AppDataSource = new DataSource(getDataSourceOptions());
+const AppDataSource: DataSource = new DataSource(getDataSourceOptions());
 
 export default AppDataSource;

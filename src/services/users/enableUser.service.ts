@@ -1,6 +1,6 @@
 import AppDataSource from "../../data-source";
 import User from "../../entities/user.entity";
-import { iUserEntity, iUserRes } from "../../interfaces/users.interface";
+import { iUser, iUserEntity, iUserRes } from "../../interfaces/users.interface";
 import { userUpdateResSchema } from "../../schemas/users.schema";
 
 const enableUserService = async (userId: string): Promise<iUserRes> => {
@@ -8,16 +8,16 @@ const enableUserService = async (userId: string): Promise<iUserRes> => {
 
   await userRepository.restore(userId);
 
-  const user = await userRepository.findOneBy({ id: userId });
+  const user: iUser | null = await userRepository.findOneBy({ id: userId });
 
-  const { id, ...userData } = userUpdateResSchema.parse(user);
+  const { id, ...userData }: iUserRes = userUpdateResSchema.parse(user);
 
-  const dataRes = {
+  const dataRes: iUserRes = {
     id: id,
     ...userData,
   };
 
-  return dataRes;
+  return dataRes as iUserRes;
 };
 
 export default enableUserService;

@@ -9,7 +9,7 @@ import {
   refreshTokenReqSchema,
 } from "../schemas/authSessions.schema";
 
-const authRoutes = Router();
+const authRoutes: Router = Router();
 
 authRoutes.post(
   "/login",

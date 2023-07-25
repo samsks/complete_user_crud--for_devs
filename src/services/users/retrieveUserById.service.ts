@@ -3,9 +3,9 @@ import { iUser, iUserRes } from "../../interfaces/users.interface";
 import { userResSchema } from "../../schemas/users.schema";
 
 const retrieveUserByIdService = async (user: iUser): Promise<iUserRes> => {
-  const { id, avatar, ...userData } = userResSchema.parse(user);
+  const { id, avatar, ...userData }: iUserRes = userResSchema.parse(user);
 
-  const dataUser = {
+  const dataUser: iUserRes = {
     id: id,
     ...userData,
     avatar: user.avatar ? path.join(__dirname, user.avatar?.path!) : null,
