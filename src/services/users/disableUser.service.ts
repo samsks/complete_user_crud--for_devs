@@ -1,10 +1,17 @@
-import { iUserEntity } from "../../interfaces/users.interface";
+import AppDataSource from "../../data-source";
+import Avatar from "../../entities/avatar.entity";
+import { iUser, iUserEntity } from "../../interfaces/users.interface";
 
 const disableUserService = async (
   userRepository: iUserEntity,
-  userId: string
+  user: iUser
 ): Promise<void> => {
-  await userRepository.softDelete(userId);
+  if (user.avatar) {
+    const avatarRepository = AppDataSource.getRepository(Avatar);
+    await avatarRepository.softDelete(user.avatar.id);
+  }
+
+  await userRepository.softDelete(user.id);
 
   return;
 };

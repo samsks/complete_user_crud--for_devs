@@ -3,9 +3,11 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import Avatar from "./avatar.entity";
 
 @Entity("users")
 export default class User {
@@ -20,9 +22,6 @@ export default class User {
 
   @Column({ type: "varchar", length: 127 })
   password: string;
-
-  @Column({ type: "varchar", length: 127, nullable: true })
-  profile_image?: string | null | undefined;
 
   @Column({ type: "varchar", length: 30 })
   first_name: string;
@@ -51,6 +50,9 @@ export default class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @DeleteDateColumn()
+  @DeleteDateColumn({ nullable: true })
   deleted_at: Date;
+
+  @OneToOne(() => Avatar, (avatar) => avatar.user)
+  avatar: Avatar;
 }

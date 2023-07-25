@@ -17,6 +17,7 @@ import {
   retrieveUsersController,
   updateUserController,
 } from "../controllers/users.controller";
+import multerPhotosPathConfig from "../configs/multerPhotosPath.config";
 
 const usersRoutes = Router();
 
@@ -60,6 +61,7 @@ usersRoutes.patch(
 
 usersRoutes.post(
   "",
+  multerPhotosPathConfig.single("avatar"),
   ensureIsValidDataMiddleware(userReqSchema),
   ensureEmailExistsMiddleware,
   ensureUsernameExistsMiddleware,

@@ -12,8 +12,9 @@ const ensureIsOwnerOrSuperuserMiddleware: Handler = async (req, res, next) => {
       throw new AppError("Missing permissions", 401);
 
     const userRepository = AppDataSource.getRepository(User);
-    const findUser: iUser | null = await userRepository.findOneBy({
-      id: userId,
+    const findUser: iUser | null = await userRepository.findOne({
+      where: { id: userId },
+      relations: ["avatar"],
     });
 
     if (!findUser) throw new AppError("UserID not exists", 404);
