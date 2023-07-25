@@ -1,3 +1,4 @@
+import { hash } from "bcryptjs";
 import {
   iUser,
   iUserEntity,
@@ -13,9 +14,12 @@ const updateUserService = async (
 ): Promise<iUserUpdateRes> => {
   const userUpdated = userRepository.create(bodyData);
 
+  if (userUpdated.password)
+    userUpdated.password = await hash(userUpdated.password, 10);
+
   await userRepository.update(user.id, userUpdated);
 
-  const { id, ...userData } = userUpdateResSchema.parse(user);
+  const { id, avatar, ...userData } = userUpdateResSchema.parse(user);
 
   const dataUser = {
     id: id,

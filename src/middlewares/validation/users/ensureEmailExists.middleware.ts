@@ -14,12 +14,15 @@ const ensureEmailExistsMiddleware: Handler = async (
       ? AppDataSource.getRepository(User)
       : req.locals?.userRepository!;
 
-  const findUser: iUser | null = await userRepository.findOne({
-    where: { email: req.body.email },
-    withDeleted: true,
-  });
+  if (req.body.email) {
+    const findUser: iUser | null = await userRepository.findOne({
+      where: { email: req.body.email },
+      withDeleted: true,
+    });
 
-  if (findUser) throw new AppError("Email already registered", 409);
+    if (findUser && req.locals?.user?.email !== findUser.email)
+      throw new AppError("Email already registered", 409);
+  }
 
   return next();
 };
