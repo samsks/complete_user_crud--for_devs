@@ -1,18 +1,15 @@
-import ensureIsValidDataMiddleware from "./formHandling/ensureValidDataReq.middleware";
-import ensureEmailExistsMiddleware from "./validation/users/ensureEmailExists.middleware";
-import ensureUsernameExistsMiddleware from "./validation/users/ensureUsernameExists.middleware";
-import ensureIsSuperuserMiddleware from "./authorization/ensureIsSuperuser.middleware";
-import ensureAuthMiddleware from "./authentication/ensureAuth.middleware";
-import ensureIsOwnerOrSuperuserMiddleware from "./authorization/ensureIsOwnerOrSuperuser.middleware";
+import ensureIsValidData from "./formHandling/ensureValidDataReq.middleware";
+import ensureEmailExists from "./validation/users/ensureEmailExists.middleware";
+import ensureUsernameExists from "./validation/users/ensureUsernameExists.middleware";
+import ensureIsSuperuser from "./authorization/ensureIsSuperuser.middleware";
+import ensureAuth from "./authentication/ensureAuth.middleware";
+import ensureIsOwnerOrSuperuser from "./authorization/ensureIsOwnerOrSuperuser.middleware";
 
-// AUTHENTICATION
-export { ensureAuthMiddleware };
-
-// AUTHORIZATION
-export { ensureIsSuperuserMiddleware, ensureIsOwnerOrSuperuserMiddleware };
-
-// FORM HANDLING
-export { ensureIsValidDataMiddleware };
-
-// VALIDATION USER
-export { ensureEmailExistsMiddleware, ensureUsernameExistsMiddleware };
+export default {
+  ensureAuth,
+  ensureIsSuperuser,
+  ensureIsOwnerOrSuperuser,
+  ensureIsValidData,
+  ensureEmailExists,
+  ensureUsernameExists,
+};

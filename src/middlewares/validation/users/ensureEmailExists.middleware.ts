@@ -4,11 +4,7 @@ import User from "../../../entities/user.entity";
 import AppError from "../../../errors/AppError";
 import { iUser, iUserEntity } from "../../../interfaces/users.interface";
 
-const ensureEmailExistsMiddleware: Handler = async (
-  req,
-  res,
-  next
-): Promise<void> => {
+const ensureEmailExists: Handler = async (req, res, next): Promise<void> => {
   const userRepository: iUserEntity =
     req.method === "POST"
       ? AppDataSource.getRepository(User)
@@ -27,4 +23,4 @@ const ensureEmailExistsMiddleware: Handler = async (
   return next();
 };
 
-export default ensureEmailExistsMiddleware;
+export default ensureEmailExists;

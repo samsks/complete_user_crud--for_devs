@@ -6,7 +6,7 @@ import {
   iUserUpdateReq,
   iUserUpdateRes,
 } from "../../interfaces/users.interface";
-import { userUpdateResSchema } from "../../schemas/users.schema";
+import userSchema from "../../schemas/users.schema";
 
 const updateUserService = async (
   userRepository: iUserEntity,
@@ -21,7 +21,7 @@ const updateUserService = async (
   await userRepository.update(user.id, userUpdated);
 
   const { id, avatar, ...userData }: iUserUpdateRes =
-    userUpdateResSchema.parse(user);
+    userSchema.userUpdateRes.parse(user);
 
   const dataUser: iUserRes = {
     id: id,

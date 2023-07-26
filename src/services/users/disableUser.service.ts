@@ -3,7 +3,7 @@ import Avatar from "../../entities/avatar.entity";
 import { iAvatarEntity } from "../../interfaces/photos.interface";
 import { iUser, iUserEntity } from "../../interfaces/users.interface";
 
-const disableUserService = async (
+const disableUser = async (
   userRepository: iUserEntity,
   user: iUser
 ): Promise<void> => {
@@ -17,4 +17,4 @@ const disableUserService = async (
   return;
 };
 
-export default disableUserService;
+export default disableUser;

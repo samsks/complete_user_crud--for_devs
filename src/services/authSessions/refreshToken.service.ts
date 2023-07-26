@@ -8,7 +8,7 @@ import {
 import { iUser, iUserEntity } from "../../interfaces/users.interface";
 import AppError from "../../errors/AppError";
 
-const refreshTokenService = async ({
+const refreshToken = async ({
   refresh_token,
 }: iRefreshTokenReq): Promise<iRefreshTokenRes> => {
   const userRepository: iUserEntity = AppDataSource.getRepository(User);
@@ -60,4 +60,4 @@ const refreshTokenService = async ({
   } as iRefreshTokenRes;
 };
 
-export default refreshTokenService;
+export default refreshToken;

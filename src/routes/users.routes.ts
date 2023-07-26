@@ -1,73 +1,58 @@
 import { Router } from "express";
-import {
-  ensureAuthMiddleware,
-  ensureEmailExistsMiddleware,
-  ensureIsOwnerOrSuperuserMiddleware,
-  ensureIsSuperuserMiddleware,
-  ensureIsValidDataMiddleware,
-  ensureUsernameExistsMiddleware,
-} from "../middlewares";
-import { userReqSchema, userUpdateReqSchema } from "../schemas/users.schema";
-import {
-  createUserController,
-  deleteUserController,
-  disableUserController,
-  enableUserController,
-  retrieveUserByIdController,
-  retrieveUsersController,
-  updateUserController,
-} from "../controllers/users.controller";
+import middlewares from "../middlewares";
+import userSchemas from "../schemas/users.schema";
+import controllers from "../controllers/users.controller";
 import multerPhotosPathConfig from "../configs/multerPhotosPath.config";
 
 const usersRoutes: Router = Router();
 
 usersRoutes.delete(
   "/:userId",
-  ensureAuthMiddleware,
-  ensureIsOwnerOrSuperuserMiddleware,
-  deleteUserController
+  middlewares.ensureAuth,
+  middlewares.ensureIsOwnerOrSuperuser,
+  controllers.deleteUser
 );
 
 usersRoutes.delete(
   "/deactivate/:userId",
-  ensureAuthMiddleware,
-  ensureIsOwnerOrSuperuserMiddleware,
-  disableUserController
+  middlewares.ensureAuth,
+  middlewares.ensureIsOwnerOrSuperuser,
+  controllers.disableUser
 );
 
 usersRoutes.get(
   "",
-  ensureAuthMiddleware,
-  ensureIsSuperuserMiddleware,
-  retrieveUsersController
+  middlewares.ensureAuth,
+  middlewares.ensureIsSuperuser,
+  controllers.retrieveUsers
 );
 
 usersRoutes.get(
   "/:userId",
-  ensureAuthMiddleware,
-  ensureIsOwnerOrSuperuserMiddleware,
-  retrieveUserByIdController
+  middlewares.ensureAuth,
+  middlewares.ensureIsOwnerOrSuperuser,
+  controllers.retrieveUserById
 );
 
 usersRoutes.patch(
   "/:userId",
-  ensureAuthMiddleware,
-  ensureIsOwnerOrSuperuserMiddleware,
-  ensureIsValidDataMiddleware(userUpdateReqSchema),
-  ensureEmailExistsMiddleware,
-  ensureUsernameExistsMiddleware,
-  updateUserController
+  middlewares.ensureAuth,
+  middlewares.ensureIsOwnerOrSuperuser,
+  middlewares.ensureIsValidData(userSchemas.userUpdateReq),
+  middlewares.ensureEmailExists,
+  middlewares.ensureUsernameExists,
+  controllers.updateUser
 );
 
 usersRoutes.post(
   "",
   multerPhotosPathConfig.single("avatar"),
-  ensureIsValidDataMiddleware(userReqSchema),
-  ensureEmailExistsMiddleware,
-  ensureUsernameExistsMiddleware,
-  createUserController
+  middlewares.ensureIsValidData(userSchemas.userReq),
+  middlewares.ensureEmailExists,
+  middlewares.ensureUsernameExists,
+  controllers.createUser
 );
 
-usersRoutes.put("/activate/:userId", enableUserController);
+usersRoutes.put("/activate/:userId", controllers.enableUser);
 
 export default usersRoutes;

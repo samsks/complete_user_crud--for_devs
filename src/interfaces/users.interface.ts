@@ -1,23 +1,17 @@
 import { z } from "zod";
 import User from "../entities/user.entity";
 import { DeepPartial, Repository } from "typeorm";
-import {
-  superuserResSchema,
-  userReqLocalsSchema,
-  userReqSchema,
-  userResSchema,
-  userUpdateResSchema,
-} from "../schemas/users.schema";
+import userSchemas from "../schemas/users.schema";
 
 type iUserEntity = Repository<User>;
 type iUser = User;
 
-type iUserReq = z.infer<typeof userReqSchema>;
-type iUserRes = z.infer<typeof userResSchema>;
+type iUserReq = z.infer<typeof userSchemas.userReq>;
+type iUserRes = z.infer<typeof userSchemas.userRes>;
 type iUserUpdateReq = DeepPartial<iUserReq>;
-type iUserUpdateRes = z.infer<typeof userUpdateResSchema>;
-type iSuperuserRes = z.infer<typeof superuserResSchema>;
-type iUserLocals = z.infer<typeof userReqLocalsSchema>;
+type iUserUpdateRes = z.infer<typeof userSchemas.userUpdateRes>;
+type iSuperuserRes = z.infer<typeof userSchemas.superuserRes>;
+type iUserLocals = z.infer<typeof userSchemas.userReqLocals>;
 
 export {
   iUser,

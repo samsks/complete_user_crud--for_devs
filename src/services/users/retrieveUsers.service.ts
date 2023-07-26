@@ -6,15 +6,17 @@ import {
   iUserEntity,
   iUserRes,
 } from "../../interfaces/users.interface";
-import { superuserResSchema } from "../../schemas/users.schema";
+import userSchemas from "../../schemas/users.schema";
 
 const retrieveUsersService = async (): Promise<iSuperuserRes[]> => {
   const userRepository: iUserEntity = AppDataSource.getRepository(User);
 
-  const findUsers: iUser[] = await userRepository.find({ withDeleted: true });
+  const findUsers: Array<iUser> = await userRepository.find({
+    withDeleted: true,
+  });
 
-  const usersList: iUser[] = findUsers.map((user, i) => {
-    const { id, ...userData }: iUserRes = superuserResSchema.parse(user);
+  const usersList: Array<iUser> = findUsers.map((user, i) => {
+    const { id, ...userData }: iUserRes = userSchemas.superuserRes.parse(user);
     const dataUser: iUserRes = {
       id,
       ...userData,
@@ -22,7 +24,7 @@ const retrieveUsersService = async (): Promise<iSuperuserRes[]> => {
     return dataUser as iUser;
   });
 
-  return usersList as iSuperuserRes[];
+  return usersList as Array<iSuperuserRes>;
 };
 
 export default retrieveUsersService;

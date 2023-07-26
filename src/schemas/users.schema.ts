@@ -1,12 +1,12 @@
 import { z } from "zod";
 import { isValidDate } from "../utils/schemaValidations/user.scripts";
-import { avatarReqSchema } from "./photos.schemas";
+import avatarSchemas from "./photos.schemas";
 
-const userReqSchema = z.object({
+const userReq = z.object({
   username: z.string().max(20),
   email: z.string().email().max(50),
   password: z.string().max(127),
-  avatar: avatarReqSchema.shape.avatar.optional(),
+  avatar: avatarSchemas.avatarReq.shape.avatar.optional(),
   first_name: z.string().max(30),
   middle_name: z.string().max(30).nullish(),
   last_name: z.string().max(20),
@@ -19,7 +19,7 @@ const userReqSchema = z.object({
   }),
 });
 
-const userResSchema = userReqSchema
+const userRes = userReq
   .extend({
     id: z.string().uuid(),
     created_at: z.date(),
@@ -28,7 +28,7 @@ const userResSchema = userReqSchema
     password: true,
   });
 
-const superuserResSchema = userReqSchema
+const superuserRes = userReq
   .extend({
     id: z.string().uuid(),
     is_superuser: z.boolean(),
@@ -42,28 +42,28 @@ const superuserResSchema = userReqSchema
     avatar: true,
   });
 
-const usersListResSchema = superuserResSchema.array();
+const usersListRes = superuserRes.array();
 
-const userUpdateReqSchema = userReqSchema
+const userUpdateReq = userReq
   .omit({
     avatar: true,
   })
   .partial();
 
-const userUpdateResSchema = userResSchema.extend({
+const userUpdateRes = userRes.extend({
   updated_at: z.date(),
 });
 
-const userReqLocalsSchema = superuserResSchema.extend({
+const userReqLocals = superuserRes.extend({
   password: z.string(),
 });
 
-export {
-  userReqSchema,
-  userResSchema,
-  superuserResSchema,
-  usersListResSchema,
-  userUpdateReqSchema,
-  userUpdateResSchema,
-  userReqLocalsSchema,
+export default {
+  userReq,
+  userRes,
+  superuserRes,
+  usersListRes,
+  userUpdateReq,
+  userUpdateRes,
+  userReqLocals,
 };

@@ -1,7 +1,7 @@
 import { Handler } from "express";
 import { ZodTypeAny } from "zod";
 
-const ensureIsValidDataMiddleware =
+const ensureIsValidData =
   (schema: ZodTypeAny): Handler =>
   (req, res, next): void => {
     req.body = schema.parse(req.body);
@@ -9,4 +9,4 @@ const ensureIsValidDataMiddleware =
     return next();
   };
 
-export default ensureIsValidDataMiddleware;
+export default ensureIsValidData;
