@@ -10,7 +10,7 @@ import {
   iAuthSessionRes,
 } from "../../interfaces/authSession.interface";
 
-const authSessionService = async ({
+const authSession = async ({
   email,
   password,
 }: iAuthSessionReq): Promise<iAuthSessionRes> => {
@@ -58,4 +58,4 @@ const authSessionService = async ({
   } as iAuthSessionRes;
 };
 
-export default authSessionService;
+export default authSession;

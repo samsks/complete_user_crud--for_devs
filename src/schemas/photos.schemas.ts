@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { isValidFileExtension } from "../utils/schemaValidations/avatar.scripts";
 
-const avatarReqSchema = z.object({
+const avatarReq = z.object({
   avatar: z.any().refine((value) => {
     if (!value || typeof value !== "object" || !("fieldname" in value)) {
       return true;
@@ -10,6 +10,6 @@ const avatarReqSchema = z.object({
   }),
 });
 
-const avatarResSchema = avatarReqSchema;
+const avatarRes = avatarReq;
 
-export { avatarReqSchema, avatarResSchema };
+export default { avatarReq, avatarRes };

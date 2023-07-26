@@ -1,23 +1,23 @@
 import { z } from "zod";
-import { userReqSchema } from "../schemas/users.schema";
+import userSchemas from "../schemas/users.schema";
 
-const authSessionReqSchema = userReqSchema.pick({
+const authSessionReq = userSchemas.userReq.pick({
   email: true,
   password: true,
 });
-const authSessionResSchema = z.object({
+const authSessionRes = z.object({
   access_token: z.string(),
   refresh_token: z.string(),
 });
 
-const refreshTokenReqSchema = authSessionResSchema.pick({
+const refreshTokenReq = authSessionRes.pick({
   refresh_token: true,
 });
-const refreshTokenResSchema = authSessionResSchema;
+const refreshTokenRes = authSessionRes;
 
-export {
-  authSessionReqSchema,
-  authSessionResSchema,
-  refreshTokenReqSchema,
-  refreshTokenResSchema,
+export default {
+  authSessionReq,
+  authSessionRes,
+  refreshTokenReq,
+  refreshTokenRes,
 };

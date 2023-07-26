@@ -5,7 +5,7 @@ import path from "path";
 import fs from "fs";
 import { iAvatarEntity } from "../../interfaces/photos.interface";
 
-const deleteUserService = async (
+const deleteUser = async (
   userRepository: iUserEntity,
   user: iUser
 ): Promise<void> => {
@@ -22,4 +22,4 @@ const deleteUserService = async (
   return;
 };
 
-export default deleteUserService;
+export default deleteUser;

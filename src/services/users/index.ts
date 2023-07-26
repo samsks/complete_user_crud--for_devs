@@ -1,17 +1,17 @@
-import createUserService from "./createUser.service";
-import retrieveUsersService from "./retrieveUsers.service";
-import retrieveUserByIdService from "./retrieveUserById.service";
-import updateUserService from "./updateUser.service";
-import deleteUserService from "./deleteUser.service";
-import disableUserService from "./disableUser.service";
-import enableUserService from "./enableUser.service";
+import createUser from "./createUser.service";
+import retrieveUsers from "./retrieveUsers.service";
+import retrieveUserById from "./retrieveUserById.service";
+import updateUser from "./updateUser.service";
+import deleteUser from "./deleteUser.service";
+import disableUser from "./disableUser.service";
+import enableUser from "./enableUser.service";
 
-export {
-  createUserService,
-  enableUserService,
-  deleteUserService,
-  disableUserService,
-  retrieveUsersService,
-  retrieveUserByIdService,
-  updateUserService,
+export default {
+  createUser,
+  enableUser,
+  deleteUser,
+  disableUser,
+  retrieveUsers,
+  retrieveUserById,
+  updateUser,
 };

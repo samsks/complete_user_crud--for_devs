@@ -1,25 +1,19 @@
 import { Router } from "express";
-import { ensureIsValidDataMiddleware } from "../middlewares";
-import {
-  authSessionController,
-  refreshTokenController,
-} from "../controllers/authSessions.controller";
-import {
-  authSessionReqSchema,
-  refreshTokenReqSchema,
-} from "../schemas/authSessions.schema";
+import middlewares from "../middlewares";
+import controllers from "../controllers/authSessions.controller";
+import authSchemas from "../schemas/authSessions.schema";
 
 const authRoutes: Router = Router();
 
 authRoutes.post(
   "/login",
-  ensureIsValidDataMiddleware(authSessionReqSchema),
-  authSessionController
+  middlewares.ensureIsValidData(authSchemas.authSessionReq),
+  controllers.authSession
 );
 authRoutes.post(
   "/refresh",
-  ensureIsValidDataMiddleware(refreshTokenReqSchema),
-  refreshTokenController
+  middlewares.ensureIsValidData(authSchemas.refreshTokenReq),
+  controllers.refreshToken
 );
 
 export default authRoutes;

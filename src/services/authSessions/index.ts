@@ -1,4 +1,4 @@
-import authSessionService from "./authSession.service";
-import refreshTokenService from "./refreshToken.service";
+import authSession from "./authSession.service";
+import refreshToken from "./refreshToken.service";
 
-export { authSessionService, refreshTokenService };
+export default { authSession, refreshToken };

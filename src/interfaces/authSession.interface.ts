@@ -1,15 +1,10 @@
 import { z } from "zod";
-import {
-  authSessionReqSchema,
-  authSessionResSchema,
-  refreshTokenReqSchema,
-  refreshTokenResSchema,
-} from "../schemas/authSessions.schema";
+import authSchemas from "../schemas/authSessions.schema";
 
-type iAuthSessionReq = z.infer<typeof authSessionReqSchema>;
-type iAuthSessionRes = z.infer<typeof authSessionResSchema>;
+type iAuthSessionReq = z.infer<typeof authSchemas.authSessionReq>;
+type iAuthSessionRes = z.infer<typeof authSchemas.authSessionRes>;
 
-type iRefreshTokenReq = z.infer<typeof refreshTokenReqSchema>;
-type iRefreshTokenRes = z.infer<typeof refreshTokenResSchema>;
+type iRefreshTokenReq = z.infer<typeof authSchemas.refreshTokenReq>;
+type iRefreshTokenRes = z.infer<typeof authSchemas.refreshTokenRes>;
 
 export { iAuthSessionReq, iAuthSessionRes, iRefreshTokenReq, iRefreshTokenRes };

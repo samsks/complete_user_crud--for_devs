@@ -1,11 +1,7 @@
 import { Handler } from "express";
 import AppError from "../../errors/AppError";
 
-const ensureIsSuperuserMiddleware: Handler = async (
-  req,
-  res,
-  next
-): Promise<void> => {
+const ensureIsSuperuser: Handler = async (req, res, next): Promise<void> => {
   const { is_superuser } = req.user;
 
   if (!is_superuser) throw new AppError("Missing admin permissions", 401);
@@ -13,4 +9,4 @@ const ensureIsSuperuserMiddleware: Handler = async (
   next();
 };
 
-export default ensureIsSuperuserMiddleware;
+export default ensureIsSuperuser;

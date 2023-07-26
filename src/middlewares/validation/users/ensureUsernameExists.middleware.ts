@@ -4,11 +4,7 @@ import User from "../../../entities/user.entity";
 import AppError from "../../../errors/AppError";
 import { iUser, iUserEntity } from "../../../interfaces/users.interface";
 
-const ensureUsernameExistsMiddleware: Handler = async (
-  req,
-  res,
-  next
-): Promise<void> => {
+const ensureUsernameExists: Handler = async (req, res, next): Promise<void> => {
   const userRepository: iUserEntity =
     req.method === "POST"
       ? AppDataSource.getRepository(User)
@@ -27,4 +23,4 @@ const ensureUsernameExistsMiddleware: Handler = async (
   return next();
 };
 
-export default ensureUsernameExistsMiddleware;
+export default ensureUsernameExists;

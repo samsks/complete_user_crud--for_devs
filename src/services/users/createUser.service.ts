@@ -7,12 +7,12 @@ import {
   iUserRes,
 } from "../../interfaces/users.interface";
 import { hash } from "bcryptjs";
-import { userResSchema } from "../../schemas/users.schema";
+import userSchemas from "../../schemas/users.schema";
 import Avatar from "../../entities/avatar.entity";
 import path from "path";
 import { iAvatar, iAvatarEntity } from "../../interfaces/photos.interface";
 
-const createUserService = async (
+const createUser = async (
   newUserData: iUserReq,
   avatarFile?: Express.Multer.File
 ): Promise<iUserRes> => {
@@ -41,7 +41,7 @@ const createUserService = async (
     userAvatar = userAvatarEntity;
   }
 
-  const { id, ...newUser }: iUserRes = userResSchema.parse(userPersisted);
+  const { id, ...newUser }: iUserRes = userSchemas.userRes.parse(userPersisted);
 
   const dataRes: iUserRes = {
     id: id,
@@ -52,4 +52,4 @@ const createUserService = async (
   return dataRes as iUserRes;
 };
 
-export default createUserService;
+export default createUser;

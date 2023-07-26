@@ -4,7 +4,7 @@ import AppDataSource from "../../data-source";
 import User from "../../entities/user.entity";
 import { iUser, iUserEntity } from "../../interfaces/users.interface";
 
-const ensureIsOwnerOrSuperuserMiddleware: Handler = async (req, res, next) => {
+const ensureIsOwnerOrSuperuser: Handler = async (req, res, next) => {
   const userId: string | null =
     req.params.userId !== undefined ? req.params.userId : null;
 
@@ -32,4 +32,4 @@ const ensureIsOwnerOrSuperuserMiddleware: Handler = async (req, res, next) => {
   return next();
 };
 
-export default ensureIsOwnerOrSuperuserMiddleware;
+export default ensureIsOwnerOrSuperuser;
