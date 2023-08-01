@@ -24,6 +24,7 @@ usersRoutes.get(
   "",
   middlewares.ensureAuth,
   middlewares.ensureIsSuperuser,
+  middlewares.pagination,
   controllers.retrieveUsers
 );
 

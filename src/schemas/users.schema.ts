@@ -42,6 +42,13 @@ const superuserRes = userReq
     avatar: true,
   });
 
+const superuserPagRes = z.object({
+  prevPage: z.string().nullable(),
+  nextPage: z.string().nullable(),
+  count: z.number(),
+  data: superuserRes.array(),
+});
+
 const usersListRes = superuserRes.array();
 
 const userUpdateReq = userReq
@@ -62,6 +69,7 @@ export default {
   userReq,
   userRes,
   superuserRes,
+  superuserPagRes,
   usersListRes,
   userUpdateReq,
   userUpdateRes,

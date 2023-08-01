@@ -1,6 +1,10 @@
 import { Handler, Response } from "express";
 import services from "../services/users";
-import { iUserRes, iUserUpdateRes } from "../interfaces/users.interface";
+import {
+  iSuperuserPagRes,
+  iUserRes,
+  iUserUpdateRes,
+} from "../interfaces/users.interface";
 
 const createUser: Handler = async (req, res): Promise<Response> => {
   const newUser: iUserRes = await services.createUser(req.body, req.file);
@@ -28,7 +32,9 @@ const retrieveUserById: Handler = async (req, res): Promise<Response> => {
 };
 
 const retrieveUsers: Handler = async (req, res): Promise<Response> => {
-  const usersData: iUserRes[] = await services.retrieveUsers();
+  const usersData: iSuperuserPagRes = await services.retrieveUsers(
+    res.locals.pagination
+  );
   return res.status(200).json(usersData);
 };
 
