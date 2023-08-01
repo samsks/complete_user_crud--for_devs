@@ -14,7 +14,7 @@ usersRoutes.delete(
 );
 
 usersRoutes.delete(
-  "/deactivate/:userId",
+  "/:userId/deactivate",
   middlewares.ensureAuth,
   middlewares.ensureIsOwnerOrSuperuser,
   controllers.disableUser
@@ -24,6 +24,7 @@ usersRoutes.get(
   "",
   middlewares.ensureAuth,
   middlewares.ensureIsSuperuser,
+  middlewares.pagination,
   controllers.retrieveUsers
 );
 
@@ -39,8 +40,8 @@ usersRoutes.patch(
   middlewares.ensureAuth,
   middlewares.ensureIsOwnerOrSuperuser,
   middlewares.ensureIsValidData(userSchemas.userUpdateReq),
-  middlewares.ensureEmailExists,
-  middlewares.ensureUsernameExists,
+  middlewares.uniqueUserFieldValidator("email"),
+  middlewares.uniqueUserFieldValidator("username"),
   controllers.updateUser
 );
 
@@ -48,11 +49,11 @@ usersRoutes.post(
   "",
   multerPhotosPathConfig.single("avatar"),
   middlewares.ensureIsValidData(userSchemas.userReq),
-  middlewares.ensureEmailExists,
-  middlewares.ensureUsernameExists,
+  middlewares.uniqueUserFieldValidator("email"),
+  middlewares.uniqueUserFieldValidator("username"),
   controllers.createUser
 );
 
-usersRoutes.put("/activate/:userId", controllers.enableUser);
+usersRoutes.put("/:userId/activate", controllers.enableUser);
 
 export default usersRoutes;

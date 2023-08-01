@@ -10,8 +10,7 @@ const getDataSourceOptions = (): DataSourceOptions => {
     "./migrations/**.{js,ts}"
   );
 
-  const dbUrl: string | undefined =
-    process.env.DATABASE_URL || process.env.LOCAL_DATABASE_URL;
+  const dbUrl: string | undefined = process.env.DATABASE_URL;
 
   if (!dbUrl) throw new Error("Missing env var: 'DATABASE_URL'");
 

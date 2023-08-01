@@ -20,13 +20,7 @@ const ensureIsOwnerOrSuperuser: Handler = async (req, res, next) => {
 
     if (!findUser) throw new AppError("UserID not exists", 404);
 
-    req.locals = req.locals
-      ? { ...req.locals, userRepository: userRepository }
-      : { userRepository: userRepository };
-
-    req.locals = req.locals
-      ? { ...req.locals, user: findUser }
-      : { user: findUser };
+    req.locals = { ...req.locals, userRepository, user: findUser };
   }
 
   return next();
