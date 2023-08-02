@@ -54,5 +54,5 @@ export default class User {
   deleted_at: Date;
 
   @OneToOne(() => Avatar, (avatar) => avatar.user)
-  avatar: Avatar;
+  avatar?: Avatar | null | undefined;
 }
