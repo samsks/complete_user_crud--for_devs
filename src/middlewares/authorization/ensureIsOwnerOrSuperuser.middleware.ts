@@ -13,14 +13,14 @@ const ensureIsOwnerOrSuperuser: Handler = async (req, res, next) => {
       throw new AppError("Missing permissions", 401);
 
     const userRepository: iUserEntity = AppDataSource.getRepository(User);
-    const findUser: iUser | null = await userRepository.findOne({
+    const foundUser: iUser | null = await userRepository.findOne({
       where: { id: userId },
       relations: ["avatar"],
     });
 
-    if (!findUser) throw new AppError("UserID not exists", 404);
+    if (!foundUser) throw new AppError("UserID not exists", 404);
 
-    req.locals = { ...req.locals, userRepository, user: findUser };
+    req.locals = { ...req.locals, userRepository, user: foundUser };
   }
 
   return next();

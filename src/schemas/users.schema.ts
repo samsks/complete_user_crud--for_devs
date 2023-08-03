@@ -20,25 +20,23 @@ const userReq = z.object({
 });
 
 const userRes = userReq
+  .omit({
+    password: true,
+  })
   .extend({
     id: z.string().uuid(),
     created_at: z.date(),
-  })
-  .omit({
-    password: true,
+    avatar: avatarSchemas.avatarRes.shape.avatar.nullish(),
   });
 
-const superuserRes = userReq
+const superuserRes = userRes
   .extend({
-    id: z.string().uuid(),
-    is_superuser: z.boolean(),
-    reset_token: z.string().nullable(),
-    created_at: z.date(),
     updated_at: z.date(),
     deleted_at: z.date().nullable(),
+    is_superuser: z.boolean(),
+    reset_token: z.string().nullable(),
   })
   .omit({
-    password: true,
     avatar: true,
   });
 

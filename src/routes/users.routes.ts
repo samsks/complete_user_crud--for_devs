@@ -1,6 +1,7 @@
 import { Router } from "express";
 import middlewares from "../middlewares";
 import userSchemas from "../schemas/users.schema";
+import avatarSchemas from "../schemas/photos.schemas";
 import controllers from "../controllers/users.controller";
 import multerPhotosPathConfig from "../configs/multerPhotosPath.config";
 
@@ -55,5 +56,14 @@ usersRoutes.post(
 );
 
 usersRoutes.put("/:userId/activate", controllers.enableUser);
+
+usersRoutes.put(
+  "/:userId/avatar",
+  middlewares.ensureAuth,
+  middlewares.ensureIsOwnerOrSuperuser,
+  multerPhotosPathConfig.single("avatar"),
+  middlewares.ensureIsValidData(avatarSchemas.avatarReq),
+  controllers.changeAvatar
+);
 
 export default usersRoutes;
