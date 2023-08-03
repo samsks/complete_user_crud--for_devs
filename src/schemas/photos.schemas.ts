@@ -10,6 +10,8 @@ const avatarReq = z.object({
   }),
 });
 
-const avatarRes = avatarReq;
+const avatarRes = z.object({
+  avatar: z.string(),
+});
 
 export default { avatarReq, avatarRes };
