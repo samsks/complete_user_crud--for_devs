@@ -66,4 +66,11 @@ usersRoutes.put(
   controllers.changeAvatar
 );
 
+usersRoutes.delete(
+  "/:userId/avatar",
+  middlewares.ensureAuth,
+  middlewares.ensureIsOwnerOrSuperuser,
+  controllers.deleteAvatar
+);
+
 export default usersRoutes;

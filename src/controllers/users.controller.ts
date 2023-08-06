@@ -69,6 +69,11 @@ const changeAvatar: Handler = async (req, res): Promise<Response> => {
   return res.status(201).json(avatar);
 };
 
+const deleteAvatar: Handler = async (req, res): Promise<Response> => {
+  await services.avatar.deleteAvatar(req.locals?.user!);
+  return res.status(204).json();
+};
+
 export default {
   createUser,
   enableUser,
@@ -78,4 +83,5 @@ export default {
   retrieveUserById,
   updateUser,
   changeAvatar,
+  deleteAvatar,
 };
