@@ -14,6 +14,8 @@ Este projeto visa criar uma aplicação web robusta e amigável que permite aos 
 
 - Perfil do Usuário: Cada usuário terá um perfil personalizado onde podem visualizar e atualizar suas informações pessoais.
 
+- Integração OAuth: Será possível fazer login utilizando uma conta de terceiro previamente criada.
+
 - Integração com Banco de Dados: Utilização do TypeORM para mapeamento objeto-relacional, facilitando a interação com o banco de dados.
 
 - API RESTful: Implementação de uma API RESTful para permitir a comunicação entre a interface do usuário e o back-end.
