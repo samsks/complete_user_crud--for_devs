@@ -3,7 +3,6 @@ import User from "../entities/user.entity";
 import { DeepPartial, Repository } from "typeorm";
 import userSchemas from "../schemas/users.schema";
 
-type iUserEntity = Repository<User>;
 type iUser = User;
 
 type iUserReq = z.infer<typeof userSchemas.userReq>;
@@ -16,7 +15,6 @@ type iUserLocals = z.infer<typeof userSchemas.userReqLocals>;
 
 export {
   iUser,
-  iUserEntity,
   iUserReq,
   iUserRes,
   iUserUpdateReq,
