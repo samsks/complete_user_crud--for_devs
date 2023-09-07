@@ -1,21 +1,18 @@
-import AppDataSource from "../../data-source";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
-import User from "../../entities/user.entity";
 import { compare } from "bcryptjs";
-import { iUser, iUserEntity } from "../../interfaces/users.interface";
+import { iUser } from "../../interfaces/users.interface";
 import AppError from "../../errors/AppError";
 import {
   iAuthSessionReq,
   iAuthSessionRes,
 } from "../../interfaces/authSession.interface";
+import { userRepository } from "../../repositories";
 
 const authSession = async ({
   email,
   password,
 }: iAuthSessionReq): Promise<iAuthSessionRes> => {
-  const userRepository: iUserEntity = AppDataSource.getRepository(User);
-
   const user: iUser | null = await userRepository
     .createQueryBuilder("users")
     .where("users.email = :email", { email })
