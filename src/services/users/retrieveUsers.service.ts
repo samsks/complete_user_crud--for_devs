@@ -1,12 +1,10 @@
-import AppDataSource from "../../data-source";
-import User from "../../entities/user.entity";
 import { PaginationParams } from "../../interfaces/pagination.interface";
 import {
   iSuperuserPagRes,
   iUser,
-  iUserEntity,
   iUserRes,
 } from "../../interfaces/users.interface";
+import { userRepository } from "../../repositories";
 import userSchemas from "../../schemas/users.schema";
 
 const retrieveUsersService = async ({
@@ -15,8 +13,6 @@ const retrieveUsersService = async ({
   prevPage,
   nextPage,
 }: PaginationParams): Promise<iSuperuserPagRes> => {
-  const userRepository: iUserEntity = AppDataSource.getRepository(User);
-
   const [foundUsers, count]: [Array<iUser>, number] =
     await userRepository.findAndCount({
       withDeleted: true,

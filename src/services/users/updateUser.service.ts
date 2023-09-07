@@ -1,15 +1,14 @@
 import { hash } from "bcryptjs";
 import {
   iUser,
-  iUserEntity,
   iUserRes,
   iUserUpdateReq,
   iUserUpdateRes,
 } from "../../interfaces/users.interface";
 import userSchema from "../../schemas/users.schema";
+import { userRepository } from "../../repositories";
 
 const updateUserService = async (
-  userRepository: iUserEntity,
   user: iUser,
   bodyData: iUserUpdateReq
 ): Promise<iUserUpdateRes> => {
