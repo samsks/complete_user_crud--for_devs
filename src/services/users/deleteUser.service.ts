@@ -1,19 +1,13 @@
-import { iUser, iUserEntity } from "../../interfaces/users.interface";
-import Avatar from "../../entities/avatar.entity";
-import AppDataSource from "../../data-source";
+import { iUser } from "../../interfaces/users.interface";
 import path from "path";
 import fs from "fs";
-import { iAvatarEntity } from "../../interfaces/photos.interface";
+import { userRepository, avatarRepository } from "../../repositories";
 
-const deleteUser = async (
-  userRepository: iUserEntity,
-  user: iUser
-): Promise<void> => {
+const deleteUser = async (user: iUser): Promise<void> => {
   if (user.avatar) {
     const avatarFilePath: string = path.join(__dirname, user.avatar.path);
     fs.unlinkSync(avatarFilePath);
 
-    const avatarRepository: iAvatarEntity = AppDataSource.getRepository(Avatar);
     await avatarRepository.remove(user.avatar);
   }
 

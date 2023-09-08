@@ -1,18 +1,15 @@
-import AppDataSource from "../../data-source";
-import User from "../../entities/user.entity";
 import jwt from "jsonwebtoken";
 import {
   iRefreshTokenReq,
   iRefreshTokenRes,
 } from "../../interfaces/authSession.interface";
-import { iUser, iUserEntity } from "../../interfaces/users.interface";
+import { iUser } from "../../interfaces/users.interface";
 import AppError from "../../errors/AppError";
+import { userRepository } from "../../repositories";
 
 const refreshToken = async ({
   refresh_token,
 }: iRefreshTokenReq): Promise<iRefreshTokenRes> => {
-  const userRepository: iUserEntity = AppDataSource.getRepository(User);
-
   const decodedToken = jwt.verify(
     refresh_token,
     process.env.REFRESH_SECRET_KEY as string

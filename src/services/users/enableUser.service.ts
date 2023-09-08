@@ -1,11 +1,8 @@
-import AppDataSource from "../../data-source";
-import User from "../../entities/user.entity";
-import { iUser, iUserEntity, iUserRes } from "../../interfaces/users.interface";
+import { iUser, iUserRes } from "../../interfaces/users.interface";
+import { userRepository } from "../../repositories";
 import userSchemas from "../../schemas/users.schema";
 
 const enableUser = async (userId: string): Promise<iUserRes> => {
-  const userRepository: iUserEntity = AppDataSource.getRepository(User);
-
   await userRepository.restore(userId);
 
   const user: iUser | null = await userRepository.findOneBy({ id: userId });

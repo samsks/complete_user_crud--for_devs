@@ -1,23 +1,14 @@
-import AppDataSource from "../../data-source";
-import User from "../../entities/user.entity";
-import {
-  iUser,
-  iUserEntity,
-  iUserReq,
-  iUserRes,
-} from "../../interfaces/users.interface";
+import { iUser, iUserReq, iUserRes } from "../../interfaces/users.interface";
 import { hash } from "bcryptjs";
 import userSchemas from "../../schemas/users.schema";
-import Avatar from "../../entities/avatar.entity";
 import path from "path";
-import { iAvatar, iAvatarEntity } from "../../interfaces/photos.interface";
+import { iAvatar } from "../../interfaces/photos.interface";
+import { avatarRepository, userRepository } from "../../repositories";
 
 const createUser = async (
   newUserData: iUserReq,
   avatarFile?: Express.Multer.File
 ): Promise<iUserRes> => {
-  const userRepository: iUserEntity = AppDataSource.getRepository(User);
-
   const { password, ...userData }: iUserReq = newUserData;
 
   const user: iUser = userRepository.create({
@@ -30,8 +21,6 @@ const createUser = async (
   let userAvatar: iAvatar | null = null;
 
   if (avatarFile) {
-    const avatarRepository: iAvatarEntity = AppDataSource.getRepository(Avatar);
-
     const userAvatarEntity: iAvatar = avatarRepository.create({
       name: avatarFile.originalname,
       path: "../../../upload/avatars/" + avatarFile.filename,

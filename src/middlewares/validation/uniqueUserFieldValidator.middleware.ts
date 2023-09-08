@@ -1,17 +1,12 @@
 import { Handler } from "express";
 import AppError from "../../errors/AppError";
-import { iUser, iUserEntity } from "../../interfaces/users.interface";
-import AppDataSource from "../../data-source";
+import { iUser } from "../../interfaces/users.interface";
 import User from "../../entities/user.entity";
+import { userRepository } from "../../repositories";
 
 const uniqueUserFieldValidator =
   (field: keyof User): Handler =>
   async (req, res, next): Promise<void> => {
-    const userRepository: iUserEntity =
-      req.method === "POST"
-        ? AppDataSource.getRepository(User)
-        : req.locals?.userRepository!;
-
     if (req.body[field]) {
       const findUser: iUser | null = await userRepository.findOne({
         where: { [field]: req.body[field] },

@@ -23,18 +23,12 @@ const enableUser: Handler = async (req, res): Promise<Response> => {
 };
 
 const deleteUser: Handler = async (req, res): Promise<Response> => {
-  await services.user.deleteUser(
-    req.locals!.userRepository!,
-    req.locals!.user!
-  );
+  await services.user.deleteUser(req.locals!.user!);
   return res.status(204).json();
 };
 
 const disableUser: Handler = async (req, res): Promise<Response> => {
-  await services.user.disableUser(
-    req.locals!.userRepository!,
-    req.locals!.user!
-  );
+  await services.user.disableUser(req.locals!.user!);
   return res.status(204).json();
 };
 
@@ -54,7 +48,6 @@ const retrieveUsers: Handler = async (req, res): Promise<Response> => {
 
 const updateUser: Handler = async (req, res): Promise<Response> => {
   const userData: iUserUpdateRes = await services.user.updateUser(
-    req.locals!.userRepository!,
     req.locals!.user!,
     req.body
   );
