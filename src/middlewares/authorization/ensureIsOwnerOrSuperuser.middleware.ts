@@ -8,17 +8,19 @@ const ensureIsOwnerOrSuperuser: Handler = async (req, res, next) => {
     req.params.userId !== undefined ? req.params.userId : null;
 
   if (userId) {
-    if (!req.user.is_superuser && req.user.id != userId)
+    const { is_superuser, sub } = res.locals.decoded;
+
+    if (!is_superuser && sub != userId)
       throw new AppError("Missing permissions", 401);
 
-    const foundUser: iUser | null = await userRepository.findOne({
+    const paramsUser: iUser | null = await userRepository.findOne({
       where: { id: userId },
       relations: ["avatar"],
     });
 
-    if (!foundUser) throw new AppError("UserID not exists", 404);
+    if (!paramsUser) throw new AppError("UserID not exists", 404);
 
-    req.locals = { ...req.locals, user: foundUser };
+    res.locals = { ...res.locals, paramsUser };
   }
 
   return next();

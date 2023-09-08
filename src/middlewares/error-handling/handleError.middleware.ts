@@ -21,6 +21,9 @@ const handleError = async (
     });
 
   if (err instanceof JsonWebTokenError) {
+    if (err.message.includes("jwt"))
+      err.message = err.message.replace("jwt", "token");
+
     return res.status(401).json({ message: err.message });
   }
 

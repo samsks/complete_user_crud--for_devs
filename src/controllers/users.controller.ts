@@ -23,18 +23,18 @@ const enableUser: Handler = async (req, res): Promise<Response> => {
 };
 
 const deleteUser: Handler = async (req, res): Promise<Response> => {
-  await services.user.deleteUser(req.locals!.user!);
+  await services.user.deleteUser(res.locals.paramsUser);
   return res.status(204).json();
 };
 
 const disableUser: Handler = async (req, res): Promise<Response> => {
-  await services.user.disableUser(req.locals!.user!);
+  await services.user.disableUser(res.locals.paramsUser);
   return res.status(204).json();
 };
 
 const retrieveUserById: Handler = async (req, res): Promise<Response> => {
   const userData: iUserRes = await services.user.retrieveUserById(
-    req.locals!.user!
+    res.locals.paramsUser
   );
   return res.status(200).json(userData);
 };
@@ -48,7 +48,7 @@ const retrieveUsers: Handler = async (req, res): Promise<Response> => {
 
 const updateUser: Handler = async (req, res): Promise<Response> => {
   const userData: iUserUpdateRes = await services.user.updateUser(
-    req.locals!.user!,
+    res.locals.paramsUser,
     req.body
   );
   return res.status(200).json(userData);
@@ -57,13 +57,13 @@ const updateUser: Handler = async (req, res): Promise<Response> => {
 const changeAvatar: Handler = async (req, res): Promise<Response> => {
   const avatar = await services.avatar.changeAvatar(
     req.file!,
-    req.locals!.user!
+    res.locals.paramsUser
   );
   return res.status(201).json(avatar);
 };
 
 const deleteAvatar: Handler = async (req, res): Promise<Response> => {
-  await services.avatar.deleteAvatar(req.locals?.user!);
+  await services.avatar.deleteAvatar(res.locals.paramsUser);
   return res.status(204).json();
 };
 
