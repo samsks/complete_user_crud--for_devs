@@ -12,15 +12,27 @@ const updateUserService = async (
   user: iUser,
   bodyData: iUserUpdateReq
 ): Promise<iUserUpdateRes> => {
-  const userUpdated: iUser = userRepository.create(bodyData);
+  const userPayload: iUser = userRepository.create(bodyData);
 
-  if (userUpdated.password)
-    userUpdated.password = await hash(userUpdated.password, 10);
+  if (userPayload.password)
+    userPayload.password = await hash(userPayload.password, 10);
 
-  await userRepository.update(user.id, userUpdated);
+  const userUpdated = await userRepository
+    .createQueryBuilder()
+    .update()
+    .set(userPayload)
+    .where("id = :id", { id: user.id })
+    .returning("*")
+    .execute();
 
-  const { id, avatar, ...userData }: iUserUpdateRes =
-    userSchema.userUpdateRes.parse(user);
+  const rawUser = userUpdated.raw[0];
+
+  if (rawUser.birthday instanceof Date) {
+    rawUser.birthday = rawUser.birthday.toISOString().split("T")[0];
+  }
+
+  const { id, ...userData }: iUserUpdateRes =
+    userSchema.userUpdateRes.parse(rawUser);
 
   const dataUser: iUserRes = {
     id: id,
