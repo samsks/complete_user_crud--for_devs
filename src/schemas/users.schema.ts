@@ -26,19 +26,22 @@ const userRes = userReq
   .extend({
     id: z.string().uuid(),
     created_at: z.date(),
-    avatar: avatarSchemas.avatarRes.shape.avatar.nullish(),
   });
 
-const superuserRes = userRes
-  .extend({
-    updated_at: z.date(),
-    deleted_at: z.date().nullable(),
-    is_superuser: z.boolean(),
-    reset_token: z.string().nullable(),
-  })
-  .omit({
-    avatar: true,
-  });
+const userResLocals = userRes.extend({
+  avatar: avatarSchemas.avatarRes.nullish(),
+});
+
+const userResWithAvatar = userRes.extend({
+  avatar: avatarSchemas.avatarResUser.shape.avatar.nullish(),
+});
+
+const superuserRes = userRes.extend({
+  updated_at: z.date(),
+  deleted_at: z.date().nullable(),
+  is_superuser: z.boolean(),
+  reset_token: z.string().nullable(),
+});
 
 const superuserPagRes = z.object({
   prevPage: z.string().nullable(),
@@ -59,17 +62,14 @@ const userUpdateRes = userRes.extend({
   updated_at: z.date(),
 });
 
-const userReqLocals = superuserRes.extend({
-  password: z.string(),
-});
-
 export default {
   userReq,
   userRes,
+  userResLocals,
+  userResWithAvatar,
   superuserRes,
   superuserPagRes,
   usersListRes,
   userUpdateReq,
   userUpdateRes,
-  userReqLocals,
 };
