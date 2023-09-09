@@ -1,8 +1,10 @@
+import path from "path";
 import { PaginationParams } from "../../interfaces/pagination.interface";
 import {
   iSuperuserPagRes,
   iUser,
-  iUserRes,
+  iUserResLocals,
+  iUserResWithAvatar,
 } from "../../interfaces/users.interface";
 import { userRepository } from "../../repositories";
 import userSchemas from "../../schemas/users.schema";
@@ -16,17 +18,22 @@ const retrieveUsersService = async ({
   const [foundUsers, count]: [Array<iUser>, number] =
     await userRepository.findAndCount({
       withDeleted: true,
+      relations: ["avatar"],
       skip: page,
       take: perPage,
     });
 
-  const usersList: Array<iUser> = foundUsers.map((user) => {
-    const { id, ...userData }: iUserRes = userSchemas.superuserRes.parse(user);
-    const dataUser: iUserRes = {
+  const usersList: Array<iUserResWithAvatar> = foundUsers.map((user) => {
+    const { id, ...userData }: iUserResLocals =
+      userSchemas.superuserRes.parse(user);
+
+    return {
       id,
       ...userData,
-    };
-    return dataUser as iUser;
+      avatar: userData.avatar
+        ? path.join(__dirname, userData.avatar.path)
+        : null,
+    } as iUserResWithAvatar;
   });
 
   return {

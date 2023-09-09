@@ -1,7 +1,6 @@
 import { hash } from "bcryptjs";
 import {
   iUser,
-  iUserRes,
   iUserUpdateReq,
   iUserUpdateRes,
 } from "../../interfaces/users.interface";
@@ -34,12 +33,10 @@ const updateUserService = async (
   const { id, ...userData }: iUserUpdateRes =
     userSchema.userUpdateRes.parse(rawUser);
 
-  const dataUser: iUserRes = {
+  return {
     id: id,
     ...userData,
-  };
-
-  return dataUser as iUserUpdateRes;
+  } as iUserUpdateRes;
 };
 
 export default updateUserService;

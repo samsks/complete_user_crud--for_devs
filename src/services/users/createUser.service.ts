@@ -1,4 +1,9 @@
-import { iUser, iUserReq, iUserRes } from "../../interfaces/users.interface";
+import {
+  iUser,
+  iUserReq,
+  iUserResLocals,
+  iUserResWithAvatar,
+} from "../../interfaces/users.interface";
 import { hash } from "bcryptjs";
 import userSchemas from "../../schemas/users.schema";
 import path from "path";
@@ -8,7 +13,7 @@ import { avatarRepository, userRepository } from "../../repositories";
 const createUser = async (
   newUserData: iUserReq,
   avatarFile?: Express.Multer.File
-): Promise<iUserRes> => {
+): Promise<iUserResWithAvatar> => {
   const { password, ...userData }: iUserReq = newUserData;
 
   const user: iUser = userRepository.create({
@@ -30,15 +35,14 @@ const createUser = async (
     userAvatar = userAvatarEntity;
   }
 
-  const { id, ...newUser }: iUserRes = userSchemas.userRes.parse(userPersisted);
+  const { id, ...newUser }: iUserResLocals =
+    userSchemas.userRes.parse(userPersisted);
 
-  const dataRes: iUserRes = {
-    id: id,
+  return {
+    id,
     ...newUser,
     avatar: avatarFile ? path.join(__dirname, userAvatar?.path!) : null,
-  };
-
-  return dataRes as iUserRes;
+  } as iUserResWithAvatar;
 };
 
 export default createUser;

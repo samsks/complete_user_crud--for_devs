@@ -11,8 +11,6 @@ const deleteAvatar = async (user: iUser): Promise<void> => {
   fs.unlinkSync(avatarFilePath);
 
   await avatarRepository.remove(user.avatar);
-
-  return;
 };
 
 export default deleteAvatar;
