@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
 import AppError from "../../errors/AppError";
-import "express-async-errors";
 import { JsonWebTokenError } from "jsonwebtoken";
 
 const handleError = async (
