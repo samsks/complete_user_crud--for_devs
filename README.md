@@ -27,6 +27,7 @@ Este projeto visa criar uma aplicação web robusta e amigável que permite aos 
 - TypeORM
 - PostgreSQL (ou outro banco de dados de sua escolha)
 - Multer (para o upload de arquivos)
+- Nodemailer
 - Autenticação JWT
 - Docker (opcional para facilitar o ambiente de desenvolvimento)
 - Swagger (para documentação da API)
