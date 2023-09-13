@@ -1,19 +1,26 @@
 import { Handler, Response } from "express";
 import userServices from "../services/users";
 import avatarServices from "../services/avatars";
+import emailServices from "../services/emails";
 import {
   iSuperuserPagRes,
   iUserRes,
+  iUserResWithAvatar,
   iUserUpdateRes,
 } from "../interfaces/users.interface";
+import { iAvatarResPath } from "../interfaces/photos.interface";
 
 const services = {
   user: userServices,
   avatar: avatarServices,
+  email: emailServices,
 };
 
 const createUser: Handler = async (req, res): Promise<Response> => {
-  const newUser: iUserRes = await services.user.createUser(req.body, req.file);
+  const newUser: iUserResWithAvatar = await services.user.createUser(
+    req.body,
+    req.file
+  );
   return res.status(201).send(newUser);
 };
 
@@ -23,18 +30,18 @@ const enableUser: Handler = async (req, res): Promise<Response> => {
 };
 
 const deleteUser: Handler = async (req, res): Promise<Response> => {
-  await services.user.deleteUser(req.locals!.user!);
+  await services.user.deleteUser(res.locals.paramsUser);
   return res.status(204).json();
 };
 
 const disableUser: Handler = async (req, res): Promise<Response> => {
-  await services.user.disableUser(req.locals!.user!);
+  await services.user.disableUser(res.locals.paramsUser);
   return res.status(204).json();
 };
 
 const retrieveUserById: Handler = async (req, res): Promise<Response> => {
-  const userData: iUserRes = await services.user.retrieveUserById(
-    req.locals!.user!
+  const userData: iUserResWithAvatar = await services.user.retrieveUserById(
+    res.locals.paramsUser
   );
   return res.status(200).json(userData);
 };
@@ -48,23 +55,32 @@ const retrieveUsers: Handler = async (req, res): Promise<Response> => {
 
 const updateUser: Handler = async (req, res): Promise<Response> => {
   const userData: iUserUpdateRes = await services.user.updateUser(
-    req.locals!.user!,
+    res.locals.paramsUser,
     req.body
   );
   return res.status(200).json(userData);
 };
 
 const changeAvatar: Handler = async (req, res): Promise<Response> => {
-  const avatar = await services.avatar.changeAvatar(
+  const avatar: iAvatarResPath = await services.avatar.changeAvatar(
     req.file!,
-    req.locals!.user!
+    res.locals.paramsUser
   );
   return res.status(201).json(avatar);
 };
 
 const deleteAvatar: Handler = async (req, res): Promise<Response> => {
-  await services.avatar.deleteAvatar(req.locals?.user!);
+  await services.avatar.deleteAvatar(res.locals.paramsUser);
   return res.status(204).json();
+};
+
+const resetPasswordSendMail: Handler = async (req, res): Promise<Response> => {
+  await services.email.resetPasswordSendEmail(
+    req.body.email,
+    req.protocol,
+    req.get("host")!
+  );
+  return res.status(200).json({ message: "Email successfully sent" });
 };
 
 export default {
@@ -77,4 +93,5 @@ export default {
   updateUser,
   changeAvatar,
   deleteAvatar,
+  resetPasswordSendMail,
 };

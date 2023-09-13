@@ -27,7 +27,7 @@ const getDataSourceOptions = (): DataSourceOptions => {
     return {
       type: "postgres",
       url: dbUrl,
-      synchronize: false, // Disable it when resolving migration issues, and remember to re-enable it afterward.
+      synchronize: true, // Disable it when resolving migration issues, and remember to re-enable it afterward.
       logging: true,
       entities: [entitiesPath],
       migrations: [migrationsPath],

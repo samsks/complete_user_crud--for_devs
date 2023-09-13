@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import { sign } from "jsonwebtoken";
 import "dotenv/config";
 import { compare } from "bcryptjs";
 import { iUser } from "../../interfaces/users.interface";
@@ -13,38 +13,38 @@ const authSession = async ({
   email,
   password,
 }: iAuthSessionReq): Promise<iAuthSessionRes> => {
-  const user: iUser | null = await userRepository
+  const foundUser: iUser | null = await userRepository
     .createQueryBuilder("users")
     .where("users.email = :email", { email })
     .withDeleted()
     .getOne();
 
-  if (!user) throw new AppError("Client or Password invalid", 403);
+  if (!foundUser) throw new AppError("Invalid credentials", 403);
 
-  const passwordMatch: boolean = await compare(password, user.password);
+  const passwordMatch: boolean = await compare(password, foundUser.password);
 
-  if (!passwordMatch) throw new AppError("Client or Password invalid", 403);
+  if (!passwordMatch) throw new AppError("Invalid credentials", 403);
 
-  if (user.deleted_at) throw new AppError("The user is deactivated", 403);
+  if (foundUser.deleted_at) throw new AppError("The user is deactivated", 403);
 
-  const loginToken: string = jwt.sign(
+  const loginToken: string = sign(
     {
-      is_superuser: user.is_superuser,
+      is_superuser: foundUser.is_superuser,
     },
     process.env.TOKEN_SECRET_KEY as string,
     {
-      subject: user.id,
+      subject: foundUser.id,
       expiresIn: process.env.TOKEN_EXPIRATION_TIME,
     }
   );
 
-  const refreshToken: string = jwt.sign(
+  const refreshToken: string = sign(
     {
-      is_superuser: user.is_superuser,
+      is_superuser: foundUser.is_superuser,
     },
     process.env.REFRESH_SECRET_KEY as string,
     {
-      subject: user.id,
+      subject: foundUser.id,
       expiresIn: process.env.REFRESH_EXPIRATION_TIME,
     }
   );

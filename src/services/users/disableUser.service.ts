@@ -7,8 +7,6 @@ const disableUser = async (user: iUser): Promise<void> => {
   }
 
   await userRepository.softDelete(user.id);
-
-  return;
 };
 
 export default disableUser;

@@ -8,5 +8,6 @@ type iAvatar = Avatar;
 
 type iAvatarReq = z.infer<typeof avatarSchemas.avatarReq>;
 type iAvatarRes = z.infer<typeof avatarSchemas.avatarRes>;
+type iAvatarResPath = z.infer<typeof avatarSchemas.avatarResUser>;
 
-export { iAvatar, iAvatarEntity, iAvatarReq, iAvatarRes };
+export { iAvatar, iAvatarEntity, iAvatarReq, iAvatarRes, iAvatarResPath };

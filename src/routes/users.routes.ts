@@ -73,4 +73,10 @@ usersRoutes.delete(
   controllers.deleteAvatar
 );
 
+usersRoutes.post(
+  "/resetPassword",
+  middlewares.ensureIsValidData(userSchemas.userResetPassReq),
+  controllers.resetPasswordSendMail
+);
+
 export default usersRoutes;

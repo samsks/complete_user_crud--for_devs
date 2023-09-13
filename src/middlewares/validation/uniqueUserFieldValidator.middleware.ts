@@ -8,12 +8,12 @@ const uniqueUserFieldValidator =
   (field: keyof User): Handler =>
   async (req, res, next): Promise<void> => {
     if (req.body[field]) {
-      const findUser: iUser | null = await userRepository.findOne({
+      const foundUser: iUser | null = await userRepository.findOne({
         where: { [field]: req.body[field] },
         withDeleted: true,
       });
 
-      if (findUser && req.locals?.user?.[field] !== findUser[field])
+      if (foundUser && res.locals.paramsUser?.[field] !== foundUser[field])
         throw new AppError(
           `${
             field.charAt(0).toUpperCase() + field.slice(1)

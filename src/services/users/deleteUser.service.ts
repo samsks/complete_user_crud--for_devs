@@ -12,8 +12,6 @@ const deleteUser = async (user: iUser): Promise<void> => {
   }
 
   await userRepository.remove(user);
-
-  return;
 };
 
 export default deleteUser;

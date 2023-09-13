@@ -11,7 +11,16 @@ const avatarReq = z.object({
 });
 
 const avatarRes = z.object({
+  id: z.string().uuid(),
+  name: z.string(),
+  path: z.string(),
+  created_at: z.date(),
+  updated_at: z.date(),
+  deleted_at: z.date().nullish(),
+});
+
+const avatarResUser = z.object({
   avatar: z.string(),
 });
 
-export default { avatarReq, avatarRes };
+export default { avatarReq, avatarRes, avatarResUser };
