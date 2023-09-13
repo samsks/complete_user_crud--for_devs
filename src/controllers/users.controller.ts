@@ -1,6 +1,7 @@
 import { Handler, Response } from "express";
 import userServices from "../services/users";
 import avatarServices from "../services/avatars";
+import emailServices from "../services/emails";
 import {
   iSuperuserPagRes,
   iUserRes,
@@ -12,6 +13,7 @@ import { iAvatarResPath } from "../interfaces/photos.interface";
 const services = {
   user: userServices,
   avatar: avatarServices,
+  email: emailServices,
 };
 
 const createUser: Handler = async (req, res): Promise<Response> => {
@@ -72,6 +74,15 @@ const deleteAvatar: Handler = async (req, res): Promise<Response> => {
   return res.status(204).json();
 };
 
+const resetPasswordSendMail: Handler = async (req, res): Promise<Response> => {
+  await services.email.resetPasswordSendEmail(
+    req.body.email,
+    req.protocol,
+    req.get("host")!
+  );
+  return res.status(200).json({ message: "Email successfully sent" });
+};
+
 export default {
   createUser,
   enableUser,
@@ -82,4 +93,5 @@ export default {
   updateUser,
   changeAvatar,
   deleteAvatar,
+  resetPasswordSendMail,
 };
