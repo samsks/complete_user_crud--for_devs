@@ -36,8 +36,12 @@ const userResWithAvatar = userRes.extend({
   avatar: avatarSchemas.avatarResUser.shape.avatar.nullish(),
 });
 
-const userResetPassReq = z.object({
+const userMailResetPass = z.object({
   email: userReq.shape.email,
+});
+
+const userResetPass = z.object({
+  password: userReq.shape.password,
 });
 
 const superuserRes = userRes.extend({
@@ -76,5 +80,6 @@ export default {
   usersListRes,
   userUpdateReq,
   userUpdateRes,
-  userResetPassReq,
+  userMailResetPass,
+  userResetPass,
 };

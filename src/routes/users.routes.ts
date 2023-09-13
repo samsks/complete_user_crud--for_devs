@@ -75,8 +75,14 @@ usersRoutes.delete(
 
 usersRoutes.post(
   "/resetPassword",
-  middlewares.ensureIsValidData(userSchemas.userResetPassReq),
+  middlewares.ensureIsValidData(userSchemas.userMailResetPass),
   controllers.resetPasswordSendMail
+);
+
+usersRoutes.post(
+  "/:resetToken/resetPassword",
+  middlewares.ensureIsValidData(userSchemas.userResetPass),
+  controllers.resetPassword
 );
 
 export default usersRoutes;

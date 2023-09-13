@@ -83,6 +83,12 @@ const resetPasswordSendMail: Handler = async (req, res): Promise<Response> => {
   return res.status(200).json({ message: "Email successfully sent" });
 };
 
+const resetPassword: Handler = async (req, res): Promise<Response> => {
+  await services.email.resetPassword(req.body.password, req.params.resetToken);
+
+  return res.json({ message: "Successfully updated password" });
+};
+
 export default {
   createUser,
   enableUser,
@@ -94,4 +100,5 @@ export default {
   changeAvatar,
   deleteAvatar,
   resetPasswordSendMail,
+  resetPassword,
 };

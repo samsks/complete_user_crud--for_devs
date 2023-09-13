@@ -1,4 +1,3 @@
-import { randomUUID } from "crypto";
 import AppError from "../../errors/AppError";
 import { userRepository } from "../../repositories";
 import mailer from "../../utils/nodemailer";
@@ -9,7 +8,7 @@ const resetPasswordSendMail = async (
   email: string,
   protocol: string,
   host: string
-) => {
+): Promise<void> => {
   const user = await userRepository.findOneBy({
     email,
   });
@@ -26,8 +25,6 @@ const resetPasswordSendMail = async (
       expiresIn: process.env.RESET_PASSWORD_EXPIRATION_TIME,
     }
   );
-
-  // const resetToken = randomUUID();
 
   await userRepository.update(
     {
