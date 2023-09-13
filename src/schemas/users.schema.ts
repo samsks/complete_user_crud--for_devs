@@ -36,6 +36,10 @@ const userResWithAvatar = userRes.extend({
   avatar: avatarSchemas.avatarResUser.shape.avatar.nullish(),
 });
 
+const userResetPassReq = z.object({
+  email: userReq.shape.email,
+});
+
 const superuserRes = userRes.extend({
   updated_at: z.date(),
   deleted_at: z.date().nullable(),
@@ -72,4 +76,5 @@ export default {
   usersListRes,
   userUpdateReq,
   userUpdateRes,
+  userResetPassReq,
 };
