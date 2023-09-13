@@ -1,8 +1,12 @@
 import { createTransport } from "nodemailer";
-import { iEmailReq } from "../../interfaces/email.interface";
+import {
+  iMailConfig,
+  iMailPassRecovery,
+} from "../../interfaces/email.interface";
 import "dotenv/config";
+import Mailgen from "mailgen";
 
-const sendEmail = async ({ to, subject, text }: iEmailReq) => {
+const sendMailConfig = async ({ to, subject, text }: iMailConfig) => {
   const transporter = createTransport({
     host: process.env.SMTP_HOST,
     // port: Number(process.env.SMTP_PORT),
@@ -28,4 +32,45 @@ const sendEmail = async ({ to, subject, text }: iEmailReq) => {
     });
 };
 
-export default sendEmail;
+const passRecoveryTemplate = ({
+  userEmail,
+  userName,
+  protocol,
+  host,
+  resetToken,
+}: iMailPassRecovery) => {
+  const mailGenerator = new Mailgen({
+    theme: "default",
+    product: {
+      name: "Recuperação de senha.",
+      link: `${protocol}://${host}`,
+    },
+  });
+
+  const email = {
+    body: {
+      name: userName,
+      intro: "Recuperação de senha.",
+      action: {
+        instructions: "Clique aqui para resetar sua senha.",
+        button: {
+          color: "#DC4D2F",
+          text: "Resetar senha",
+          link: `${protocol}://${host}/users/${resetToken}/resetPassword`,
+        },
+      },
+    },
+  };
+
+  const emailBody = mailGenerator.generate(email);
+
+  const emailTemplate = {
+    to: userEmail,
+    subject: "Reset de senha.",
+    text: emailBody,
+  };
+
+  return emailTemplate;
+};
+
+export { sendMailConfig, passRecoveryTemplate };
