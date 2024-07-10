@@ -36,7 +36,7 @@ const refreshToken = async ({
     process.env.TOKEN_SECRET_KEY as string,
     {
       subject: user.id,
-      expiresIn: process.env.TOKEN_EXPIRATION_TIME,
+      expiresIn: process.env.TOKEN_EXPIRATION_TIME ?? "1d", // Provide a default value or convert to string/number
     }
   );
 
@@ -47,7 +47,7 @@ const refreshToken = async ({
     process.env.REFRESH_SECRET_KEY as string,
     {
       subject: user.id,
-      expiresIn: process.env.REFRESH_EXPIRATION_TIME,
+      expiresIn: process.env.REFRESH_EXPIRATION_TIME ?? "7d",
     }
   );
 
