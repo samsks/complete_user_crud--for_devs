@@ -34,7 +34,7 @@ const authSession = async ({
     process.env.TOKEN_SECRET_KEY as string,
     {
       subject: foundUser.id,
-      expiresIn: process.env.TOKEN_EXPIRATION_TIME,
+      expiresIn: process.env.TOKEN_EXPIRATION_TIME ?? "1d",
     }
   );
 
@@ -45,7 +45,7 @@ const authSession = async ({
     process.env.REFRESH_SECRET_KEY as string,
     {
       subject: foundUser.id,
-      expiresIn: process.env.REFRESH_EXPIRATION_TIME,
+      expiresIn: process.env.REFRESH_EXPIRATION_TIME ?? "7d", // Provide a default value for expiresIn
     }
   );
 

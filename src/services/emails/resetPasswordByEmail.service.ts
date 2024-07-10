@@ -18,11 +18,10 @@ const resetPasswordSendMail = async (
   }
 
   const resetToken: string = sign(
-    {},
+    { subject: user.id },
     process.env.RESET_PASSWORD_SECRET_KEY as string,
     {
-      subject: user.id,
-      expiresIn: process.env.RESET_PASSWORD_EXPIRATION_TIME,
+      expiresIn: process.env.RESET_PASSWORD_EXPIRATION_TIME ?? "1h",
     }
   );
 
