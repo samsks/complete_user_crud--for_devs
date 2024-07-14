@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "cross-env NODE_ENV=dev tsnd --cls --respawn --rs --ignore-watch node_modules src/server.ts",
+    "dev": "cross-env NODE_ENV=dev tsnd --cls --respawn --rs --transpile-only --ignore-watch node_modules src/server.ts",
     "start": "node dist/src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "typeorm": "typeorm-ts-node-commonjs"
   },
   "keywords": [],

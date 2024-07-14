@@ -1,3 +1,6 @@
+reTypewriter Snapshots v1
+
+--01----------
 import {
   iUser,
   iUserReq,
@@ -26,20 +29,11 @@ const createUser = async (
   let userAvatar: iAvatar | null = null;
 
   if (avatarFile) {
-    const avatarFolder = "upload/avatars";
-    const isProduction =
-      process.env.NODE_ENV !== "dev" && process.env.NODE_ENV !== "test";
-
-    const avatarFilePath = isProduction
-      ? path.join(__dirname, avatarFolder, avatarFile.filename)
-      : path.join(__dirname, "..", avatarFolder, avatarFile.filename);
-
     const userAvatarEntity: iAvatar = avatarRepository.create({
       name: avatarFile.originalname,
-      path: avatarFilePath,
+      path: "../../../upload/avatars/" + avatarFile.filename,
       user: userPersisted,
     });
-
     await avatarRepository.save(userAvatarEntity);
     userAvatar = userAvatarEntity;
   }
@@ -55,3 +49,5 @@ const createUser = async (
 };
 
 export default createUser;
+
+--------------
