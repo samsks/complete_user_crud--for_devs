@@ -1,0 +1,25 @@
+2023-09-20 15:30:46.864 -03 [392169] LOG:  starting PostgreSQL 16.0 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0, 64-bit
+2023-09-20 15:30:46.865 -03 [392169] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2023-09-20 15:30:46.865 -03 [392169] LOG:  listening on IPv6 address "::", port 5432
+2023-09-20 15:30:46.869 -03 [392169] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-09-20 15:30:46.878 -03 [392172] LOG:  database system was interrupted; last known up at 2023-09-19 15:46:14 -03
+2023-09-20 15:30:47.193 -03 [392172] LOG:  database system was not properly shut down; automatic recovery in progress
+2023-09-20 15:30:47.199 -03 [392172] LOG:  redo starts at 0/21A7E08
+2023-09-20 15:30:47.199 -03 [392172] LOG:  invalid record length at 0/21A7EF0: expected at least 24, got 0
+2023-09-20 15:30:47.199 -03 [392172] LOG:  redo done at 0/21A7EB8 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2023-09-20 15:30:47.204 -03 [392170] LOG:  checkpoint starting: end-of-recovery immediate wait
+2023-09-20 15:30:47.222 -03 [392170] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.003 s, total=0.021 s; sync files=2, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/21A7EF0, redo lsn=0/21A7EF0
+2023-09-20 15:30:47.226 -03 [392169] LOG:  database system is ready to accept connections
+2023-09-20 15:31:39.347 -03 [392431] FATAL:  database "WSL - Postgres 16.0" does not exist
+2023-09-20 15:35:47.243 -03 [392170] LOG:  checkpoint starting: time
+2023-09-20 15:35:47.455 -03 [392170] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.201 s, sync=0.003 s, total=0.213 s; sync files=1, longest=0.003 s, average=0.003 s; distance=10 kB, estimate=10 kB; lsn=0/21AA810, redo lsn=0/21AA7D8
+2023-09-20 19:10:51.229 -03 [392170] LOG:  checkpoint starting: time
+2023-09-20 19:12:25.703 -03 [392170] LOG:  checkpoint complete: wrote 943 buffers (5.8%); 0 WAL file(s) added, 0 removed, 0 recycled; write=94.411 s, sync=0.053 s, total=94.474 s; sync files=315, longest=0.003 s, average=0.001 s; distance=4330 kB, estimate=4330 kB; lsn=0/25E5400, redo lsn=0/25E53C8
+2023-09-20 20:35:53.226 -03 [392170] LOG:  checkpoint starting: time
+2023-09-20 20:35:54.361 -03 [392170] LOG:  checkpoint complete: wrote 12 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=1.117 s, sync=0.006 s, total=1.136 s; sync files=9, longest=0.004 s, average=0.001 s; distance=1 kB, estimate=3897 kB; lsn=0/25E5828, redo lsn=0/25E57F0
+2023-09-20 20:40:53.461 -03 [392170] LOG:  checkpoint starting: time
+2023-09-20 20:40:53.896 -03 [392170] LOG:  checkpoint complete: wrote 5 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.404 s, sync=0.004 s, total=0.435 s; sync files=3, longest=0.003 s, average=0.002 s; distance=0 kB, estimate=3508 kB; lsn=0/25E5A90, redo lsn=0/25E5A58
+2023-09-20 21:05:54.315 -03 [392170] LOG:  checkpoint starting: time
+2023-09-20 21:05:55.236 -03 [392170] LOG:  checkpoint complete: wrote 10 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.906 s, sync=0.005 s, total=0.921 s; sync files=8, longest=0.003 s, average=0.001 s; distance=1 kB, estimate=3157 kB; lsn=0/25E6258, redo lsn=0/25E6220
+2023-09-20 21:10:54.290 -03 [392170] LOG:  checkpoint starting: time
+2023-09-20 21:10:55.035 -03 [392170] LOG:  checkpoint complete: wrote 8 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.706 s, sync=0.005 s, total=0.745 s; sync files=8, longest=0.003 s, average=0.001 s; distance=2 kB, estimate=2842 kB; lsn=0/25E6CA8, redo lsn=0/25E6C70
